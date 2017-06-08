@@ -47,6 +47,17 @@ _.merge(exports, {
     },
 
     // Patient-exclusive attributes
+    bpmThreshold: {
+      type: 'array',
+      isArrayOfIntegers: true
+    },
+    requiredTics: {     // Mininum time (in tics) to wait before sending an alert
+      type: 'integer'
+    },
+    totalTics: {        // Counter that tells how many times the measurement has exceeded the threshold
+      type: 'integer',
+      defaultsTo: 0
+    },
     status: {
       type: 'string',
       enum: ['stable', 'critical']
@@ -78,6 +89,15 @@ _.merge(exports, {
      */
     isArrayOfStrings: function(value) {
       return _.isArray(value) && _.every(value, function(i) { return typeof i === 'string'; });
-    }
+    },
+
+    /**
+     * Checks if the inserted value is a valid array of integers
+     * @param {integer[]} value - The values Array to validate
+     * @returns {boolean} True if the value meets the criteria, false otherwise
+     */
+    isArrayOfIntegers: function(value) {
+      return _.isArray(value) && _.every(value, function(i) { return _.isInteger(i); });
+    },
   }
 });

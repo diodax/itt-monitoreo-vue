@@ -32,7 +32,7 @@ var devMiddleware = require('webpack-dev-middleware')(compiler, {
   // Source: https://github.com/vuejs-templates/webpack/issues/432
   watchOptions: {
         aggregateTimeout: 300,
-        poll: 1000
+        poll: true
     },
 })
 

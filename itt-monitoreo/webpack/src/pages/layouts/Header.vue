@@ -249,7 +249,7 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a v-on:click="logout()" class="btn btn-default btn-flat">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -267,5 +267,8 @@
       return {
       };
     },
+    methods: {
+      logout() { return this.$root.$options.components.App.methods.logout(); }
+    }
   };
 </script>

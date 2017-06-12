@@ -12,6 +12,8 @@ Vagrant.configure("2") do |config|
   # Add port-forward for the MongoDB service
   config.vm.network :forwarded_port, guest: 27017, host: 27017, auto_correct: true
   # Add port-forward for webpack's vue-cli hot reload template
+  # Source: https://stackoverflow.com/questions/41685966/why-does-livereload-not-work-in-vue-cli-project-with-vagrant
+  config.vm.network :forwarded_port, guest: 35729, host: 35729, auto_correct: true
   config.vm.network :forwarded_port, guest: 8080, host: 8080, auto_correct: true
 
   # Create a private network, which allows host-only access to the machine

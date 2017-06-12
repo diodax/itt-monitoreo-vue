@@ -8,7 +8,22 @@
 module.exports = {
 
   attributes: {
+    doctor: {
+      model: 'user'
+    },
+
+    patient: {
+      model: 'user'
+    },
+
+    date: {
+      type: 'datetime',
+      required: true,
+      defaultsTo: Date.now()
+    },
+
+    //title,
+    //description, observations
 
   }
 };
-

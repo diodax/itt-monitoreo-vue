@@ -2,7 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 //import Hello from '@/components/Home'
 
-import Login from './../pages/Login';
+import LoginTemplate from './../pages/Login';
+import DashTemplate from './../pages/Dash';
+import NotFoundTemplate from './../pages/NotFound';
+
+
 import Dashboard from './../pages/Dashboard';
 import Setting from './../pages/Setting';
 // User
@@ -19,37 +23,52 @@ export default new Router({
   //mode: 'html5',
   routes: [
     {
-      path: '/',
-      name: 'Dashboard',
-      component: Dashboard
-    },
-    {
       path: '/login',
       name: 'Login',
-      component: Login
-    },
-    // {
-    //   path: '/register',
-    //   name: 'Register',
-    //   component: Register
-    // },
-    {
-      path: '/settings',
-      name: 'Setting',
-      component: Setting
+      component: LoginTemplate,
+      meta: { requiresAuth: false }
     },
     {
-      path: '/user',
-      name: 'User',
-      component: User,
-      subRoutes: {
-        '/list': {
-          component: UserList,
+      path: '/',
+      name: 'Dash',
+      component: DashTemplate,
+      meta: { requiresAuth: true },
+      children: [
+        {
+          path: 'dashboard',
+          name: 'Dashboard',
+          component: Dashboard,
+          meta: { requiresAuth: true }
         },
-        '/new': {
-          component: UserNew,
+        {
+          path: 'settings',
+          name: 'Setting',
+          component: Setting,
+          meta: { requiresAuth: true }
         },
-      }
+        {
+          path: 'user',
+          name: 'User',
+          component: User,
+          meta: { requiresAuth: true },
+          subRoutes: {
+            'list': {
+              component: UserList,
+              meta: { requiresAuth: true }
+            },
+            'new': {
+              component: UserNew,
+              meta: { requiresAuth: true }
+            },
+          }
+        },
+      ]
+    },
+    {
+      path: '*',
+      name: 'NotFound',
+      component: NotFoundTemplate,
+      meta: { requiresAuth: false }
     },
   ]
 });

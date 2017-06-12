@@ -1,12 +1,12 @@
 export default [
   {
     name: 'Dashboard',
-    link: '/',
+    link: '/dashboard',
     icon: 'fa-home',
   },
   {
     name: 'Users',
-    link: '/users',
+    link: '/user',
     icon: 'fa-user',
     child: [
     {

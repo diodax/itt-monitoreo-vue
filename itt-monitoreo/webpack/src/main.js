@@ -4,13 +4,24 @@ import Vue from 'vue';
 import router from './router';
 import VueResource from 'vue-resource';
 import App from './App';
+import auth from './services/auth';
 
 Vue.config.productionTip = false;
 Vue.use(VueResource);
 
-// router.beforeEach((transition) => {
-//   console.log(transition);
-//   if (transition.to.auth) {
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth) && !auth.loggenIn()) {
+    next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      });
+  } else {
+    next();
+  }
+});
+
+// router.beforeEach(function (transition) {
+//   if (transition.to.auth && ! localStorage.getItem('user')) {
 //     transition.redirect('/login');
 //   } else {
 //     transition.next();

@@ -15,18 +15,20 @@ _.merge(exports, {
     // Common attributes to all users
     firstName: {
       type: 'string',
-      required: true,
+      required: false, //true,
       defaultsTo: ''
     },
     lastName: {
       type: 'string',
-      required: true,
+      required: false, //true,
       defaultsTo: ''
     },
     birthDate: {
       type: 'datetime',
-      required: true,
-      defaultsTo: Date.now()
+      required: false, //true,
+      defaultsTo: function () {
+            return new Date();
+        }
     },
     phoneNumbers: {
       type: 'array',

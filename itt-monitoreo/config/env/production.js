@@ -12,20 +12,23 @@
 
 module.exports = {
 
+  // Source: https://github.com/balderdashy/sails/issues/2691s
+  hookTimeout: 30000, // 30 seconds
+
   /***************************************************************************
    * Set the default database connection for models in the production        *
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
 
-  // models: {
-  //   connection: 'someMysqlServer'
-  // },
+  models: {
+    connection: 'mongoLabsProdServer'
+  },
 
   /***************************************************************************
    * Set the port in the production environment to 80                        *
    ***************************************************************************/
 
-  // port: 80,
+  port: 80,
 
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *

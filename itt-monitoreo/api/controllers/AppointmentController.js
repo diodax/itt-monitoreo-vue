@@ -6,6 +6,21 @@
  */
 
 module.exports = {
-	
-};
+	/**
+   * `AppointmentController.index()`
+   */
+  // index: function (req, res) {
+	//
+  //   return res.json({
+  //     todo: 'index() is not implemented yet!'
+  //   });
+  // },
+	//
+	// single: function (req, res) {
+	// 	return res.json({
+  //     todo: 'index() is not implemented yet!'
+  //   });
+	// }
 
+
+};

@@ -2,7 +2,7 @@
   <div>
     <app-header></app-header>
     <app-sidebar></app-sidebar>
-    <app-content :title="title"></app-content>
+    <app-content></app-content>
     <app-footer></app-footer>
   </div>
 </template>
@@ -18,7 +18,6 @@ export default {
   name: 'Dash',
   data() {
     return {
-      title: null,
       menus: Menus,
     };
   },

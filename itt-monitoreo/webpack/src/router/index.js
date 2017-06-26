@@ -11,8 +11,14 @@ import Dashboard from './../pages/Dashboard';
 import Setting from './../pages/Setting';
 // User
 import User from './../pages/users/User';
+import CreateUser from './../pages/users/CreateUser';
 import UserList from './../pages/users/UserList';
 import UserNew from './../pages/users/UserNew';
+
+// Appointment
+import AppointmentList from './../pages/appointments/AppointmentList';
+import AppointmentAdd from './../pages/appointments/AppointmentAdd';
+import AppointmentEdit from './../pages/appointments/AppointmentEdit';
 
 Vue.use(Router);
 
@@ -46,6 +52,7 @@ export default new Router({
           component: Setting,
           meta: { requiresAuth: true }
         },
+        // User CRUD routes
         {
           path: 'user',
           name: 'User',
@@ -62,6 +69,40 @@ export default new Router({
             },
           }
         },
+
+        {
+          path: 'user/create',
+          name: 'CreateUser',
+          component: CreateUser,
+          meta: { requiresAuth: true }
+        },
+
+        // End of User CRUD routes
+
+        // Appointment CRUD routes
+
+        {
+          path: 'appointment',
+          name: 'AppointmentList',
+          component: AppointmentList,
+          meta: { requiresAuth: true }
+        },
+
+        {
+          path: 'appointment/add',
+          name: 'AppointmentAdd',
+          component: AppointmentAdd,
+          meta: { requiresAuth: true }
+        },
+
+        {
+          path: 'appointment/:id',
+          name: 'AppointmentEdit',
+          component: AppointmentEdit,
+          meta: { requiresAuth: true }
+        },
+
+        // End of Appointment CRUD routes
       ]
     },
     {

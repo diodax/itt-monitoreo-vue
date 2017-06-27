@@ -29,16 +29,16 @@
                   <th style="width: 1px;">#</th>
                   <th>Doctor</th>
                   <th>Patient</th>
-                  <th>Date</th>
+                  <th>Appointed Date</th>
                   <th style="white-space: nowrap !important;"></th>
                 </tr>
               </thead>
               <tbody>
                 <tr role="row" v-for="(row, index) in list">
                   <td>{{ index + 1 }}</td>
-                  <td>{{ row.doctor.username }}</td>
-                  <td>{{ row.patient.username }}</td>
-                  <td>{{ row.date }}</td>
+                  <td>{{ row.doctor.firstName + ' ' + row.doctor.lastName + ' (' + row.doctor.username + ')' }}</td>
+                  <td>{{ row.patient.firstName + ' ' + row.patient.lastName + ' (' + row.patient.username + ')' }}</td>
+                  <td>{{ formatDate(row.startDate) }}</td>
                   <td style="width: 1%; white-space: nowrap !important; text-align: right;">
                     <router-link :to="{ path: '/appointment/' + row.id }" class='btn btn-default'>Edit</router-link>
                     <a class='btn btn-danger'>Delete</a>
@@ -55,12 +55,12 @@
     <!-- Calendar of Appointments -->
     <div class="row">
       <div class="col-xs-12">
-        <div class="box">
+        <div class="box box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title"> <i class="fa fa-fw fa-edit"></i> Calendar</h3>
+            <h3 class="box-title"> <i class="fa fa-fw fa-calendar-plus-o"></i> Calendar</h3>
           </div>
-          <div class="box-body">
-            <calendar :first-day="0" :all-events="events"></calendar>
+          <div class="box-body no-padding">
+            <calendar v-if="!loadingEvents" :events="events" :editable="true"></calendar>
           </div>
         </div>
       </div>
@@ -72,9 +72,8 @@
 
 <script>
 import api from '../../services/api';
-import {
-  Calendar
-} from 'vue-bootstrap-calendar';
+import Calendar from '../../components/Calendar';
+import {formatDate} from '../../services/filters';
 
 export default {
   name: 'AppointmentList',
@@ -83,15 +82,27 @@ export default {
       title: 'List of Appointments',
       list: [],
       events: [],
+      loadingEvents: true,
     };
   },
   components: {
     Calendar
   },
+  methods: {
+    formatDate
+  },
   created() {
-    let scope = this;
+    let self = this;
     api.get('/appointment?populate=[doctor,patient]').then(function(response) {
-        scope.list = response.data;
+        self.list = response.data;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+    api.get('/event').then(function(response) {
+        self.events = response.data;
+        self.loadingEvents = false;
       })
       .catch(function(error) {
         console.log(error);

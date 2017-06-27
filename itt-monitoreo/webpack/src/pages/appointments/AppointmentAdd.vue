@@ -13,7 +13,17 @@
   <section class="content">
     <!-- Appointment Form -->
     <div class="row">
-      <div class="col-xs-12"></div>
+      <div class="col-xs-12">
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title"> <i class="fa fa-fw fa-list-alt"></i> Form</h3>
+          </div>
+          <form class="form-horizontal" name="form">
+            <div class="box-body"></div>
+          </form>
+        </div>
+
+      </div>
     </div>
     <!-- End of Appointment Form -->
   </section>

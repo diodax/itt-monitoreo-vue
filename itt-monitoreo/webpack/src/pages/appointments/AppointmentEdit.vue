@@ -33,9 +33,9 @@ export default {
     };
   },
   created() {
-    let scope = this;
-    api.get('/appointment/' + scope.id).then(function(response) {
-        scope.model = response.data;
+    let self = this;
+    api.get('/appointment/' + self.id).then(function(response) {
+        self.model = response.data;
       })
       .catch(function(error) {
         console.log(error);

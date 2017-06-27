@@ -16,11 +16,21 @@ module.exports = {
       model: 'user'
     },
 
-    date: {
+    startDate: {
       type: 'datetime',
       required: true,
       defaultsTo: Date.now()
     },
+
+    endDate: {
+      type: 'datetime',
+      required: true,
+      defaultsTo: Date.now()
+    },
+
+    comments: {
+      type: 'string'
+    }
 
     //title,
     //description, observations

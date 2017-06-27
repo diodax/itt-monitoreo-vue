@@ -47,4 +47,14 @@ module.exports.routes = {
   'POST /register': {model: 'user', blueprint: 'create'},
   'POST /login': 'AuthController.callback',
   'GET /logout': 'AuthController.logout',
+
+  'GET /event/:id': {
+    controller: 'event',
+    action: 'find'
+  },
+  'GET /event': {
+    controller: 'event',
+    action: 'index'
+  },
+
 };

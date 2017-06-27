@@ -70,10 +70,10 @@
 </template>
 
 <script>
-import $ from 'jquery'
+import $ from 'jquery';
 // Require needed datatables modules
-import 'datatables.net'
-import 'datatables.net-bs'
+import 'datatables.net';
+import 'datatables.net-bs';
 import api from '../../services/api';
 
 export default {

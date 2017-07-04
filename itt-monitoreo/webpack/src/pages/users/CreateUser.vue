@@ -12,8 +12,6 @@
             <form class="form-horizontal" v-on:submit.prevent="submitForm()" name="form">
               <div class="box-body">
 
-
-
                 <div class="form-group">
                   <label for="firstName" class="col-sm-2 control-label">First Name</label>
                   <div class="col-sm-10">
@@ -107,10 +105,6 @@ export default {
       .catch(function(error) {
         console.log(error);
       });
-
-
-      //console.log('form submitted');
-      //console.log(this.model);
     }
   },
 

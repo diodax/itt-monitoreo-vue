@@ -13,7 +13,76 @@
   <section class="content">
     <!-- Appointment Form -->
     <div class="row">
-      <div class="col-xs-12"></div>
+      <div class="col-xs-12">
+        <div class="box box-info">
+          <div class="box-header with-border">
+            <h3 class="box-title"> <i class="fa fa-fw fa-list-alt"></i> Form</h3>
+          </div>
+          <form class="form-horizontal" name="form" @submit.prevent="submitForm()">
+            <div class="box-body">
+              <!-- Inputs block -->
+
+              <div class="form-group">
+                <label for="doctor" class="col-sm-2 control-label">Doctor</label>
+                <div class="col-sm-8">
+                  <select class="form-control" id="doctor" name="doctor" v-model="model.doctor" v-validate="'required'">
+                    <option v-for="item in doctors" v-bind:value="item.value">
+                      <p class="lead">{{ item.text }}</p>
+                      <p class="text-muted">({{ item.subtext }})</p>
+                    </option>
+                  </select>
+                  <span class="text-danger" v-show="errors.has('doctor')">{{ errors.first('doctor') }}</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="patient" class="col-sm-2 control-label">Patient</label>
+                <div class="col-sm-8">
+                  <select class="form-control" id="patient" name="patient" v-model="model.patient" v-validate="'required'">
+                    <option v-for="item in patients" v-bind:value="item.value">
+                      <p class="lead">{{ item.text }}</p>
+                      <p class="text-muted">({{ item.subtext }})</p>
+                    </option>
+                  </select>
+                  <span class="text-danger" v-show="errors.has('patient')">{{ errors.first('patient') }}</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="startDate" class="col-sm-2 control-label">Start Date</label>
+                <div class="col-sm-8">
+                  <input type="date" class="form-control" id="startDate" name="startDate" v-model="model.startDate" v-validate="'required'">
+                  <span class="text-danger" v-show="errors.has('startDate')">{{ errors.first('startDate') }}</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="endDate" class="col-sm-2 control-label">End Date</label>
+                <div class="col-sm-8">
+                  <input type="date" class="form-control" id="endDate" name="endDate" v-model="model.endDate" v-validate="'required'">
+                  <span class="text-danger" v-show="errors.has('endDate')">{{ errors.first('endDate') }}</span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="comments" class="col-sm-2 control-label">Comments</label>
+                <div class="col-sm-8">
+                  <textarea class="form-control" rows="3" id="comments" name="comments" v-model="model.comments"></textarea>
+                  <span class="text-danger" v-show="errors.has('comments')">{{ errors.first('comments') }}</span>
+                </div>
+              </div>
+
+              <!-- End of Inputs block -->
+            </div>
+            <div class="box-footer">
+              <div class="margin pull-right">
+                <button type="submit" class="btn btn-info"><i class="fa fa-floppy-o"></i> Save</button>
+                <router-link :to="{ path: '/appointment' }" class="btn btn-default" active-class=" ">Cancel</router-link>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
     <!-- End of Appointment Form -->
   </section>
@@ -22,6 +91,7 @@
 
 <script>
 import api from '../../services/api';
+import router from '../../router/index';
 
 export default {
   name: 'AppointmentEdit',
@@ -30,6 +100,8 @@ export default {
       id: this.$route.params.id,
       title: 'Edit Appointment',
       model: {},
+      doctors: [],
+      patients: [],
     };
   },
   created() {
@@ -40,6 +112,32 @@ export default {
       .catch(function(error) {
         console.log(error);
       });
+    api.get('/user').then(function(response) {
+        var selectList = response.data.map(function(element) {
+           return {
+             value: element.id,
+             text: element.firstName + ' ' + element.lastName,
+             subtext: element.email
+           };
+        });
+        self.doctors = selectList;
+        self.patients = selectList;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  },
+  methods: {
+    submitForm () {
+      let self = this;
+      api.put('/appointment/' + self.id, self.model).then(function(response) {
+        console.log(response);
+        router.push('/appointment');
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    }
   },
 }
 </script>

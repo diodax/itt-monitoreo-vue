@@ -47,6 +47,8 @@
               </tbody>
             </table>
           </div>
+          <!-- Loading (remove the following to stop the loading)-->
+          <div v-if="loadingTable" class="overlay"><i class="fa fa-refresh fa-spin"></i></div>
         </div>
       </div>
     </div>
@@ -62,6 +64,8 @@
           <div class="box-body no-padding">
             <calendar v-if="!loadingEvents" :events="events" :editable="true"></calendar>
           </div>
+          <!-- Loading (remove the following to stop the loading)-->
+          <div v-if="loadingEvents" class="overlay"><i class="fa fa-refresh fa-spin"></i></div>
         </div>
       </div>
     </div>
@@ -83,6 +87,7 @@ export default {
       list: [],
       events: [],
       loadingEvents: true,
+      loadingTable: true,
     };
   },
   components: {
@@ -95,6 +100,7 @@ export default {
     let self = this;
     api.get('/appointment?populate=[doctor,patient]').then(function(response) {
         self.list = response.data;
+        self.loadingTable = false;
       })
       .catch(function(error) {
         console.log(error);

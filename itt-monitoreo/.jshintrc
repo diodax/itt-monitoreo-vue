@@ -20,7 +20,8 @@
   "esversion": 6,
   "globals": {
     "_": false,
-    "User": false
+    "User": false,
+    "sails": false
   },
 
   //////////////////////////////////////////////////////////////////////

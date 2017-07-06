@@ -69,21 +69,31 @@ export default {
   },
   methods: {
     login() {
+      let self = this;
       var credentials = {
         identifier: this.identifier,
         password: this.password
       };
       auth.login(credentials).then(function(res){
         router.push('/dashboard');
-        //notification here
+        self.showLoginSucces();
       }).catch(function(err){
         console.log(err);
-        //notification here
+        self.showLoginError();
       });
-
-      //this.$parent.$data.login = false;
-      //this.$parent.$data.body_class = 'sidebar-mini skin-blue-light';
     },
+  },
+  notifications: {
+    showLoginSucces: {
+      title: 'Login Succesful',
+      message: 'Authentication complete',
+      type: 'info' //Default: 'info', also you can use VueNotifications.type.error instead of 'error'
+    },
+    showLoginError: {
+      title: 'Login Failed',
+      message: 'Failed to authenticate',
+      type: 'error' //Default: 'info', also you can use VueNotifications.type.error instead of 'error'
+    }
   },
 };
 </script>

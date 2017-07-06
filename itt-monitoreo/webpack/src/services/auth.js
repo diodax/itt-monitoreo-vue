@@ -9,15 +9,6 @@ const LOGIN_URL = API_URL + '/login';
 const SIGNUP_URL = API_URL + '/register';
 
 export default {
-
-  // TODO: deprecate dis
-  // User object will let us check authentication status
-  // user: {
-  //   authenticated: false,
-  //   username: null,
-  //   authdata: null
-  // },
-
   // Send a request to the login URL and save the returned token
   login(creds) {
     return new Promise(function(fulfill, reject) {
@@ -34,7 +25,7 @@ export default {
             authdata: encodedData
           };
           //console.log('before setting local storage');
-          localStorage.setItem('user', user);
+          localStorage.setItem('user', JSON.stringify(user));
           fulfill(res);
         }).catch(function(err) {
           reject(err);
@@ -53,7 +44,7 @@ export default {
             username: res.data.username,
             authdata: encodedData
           };
-          localStorage.setItem('user', user);
+          localStorage.setItem('user', JSON.stringify(user));
           fulfill(res);
         }).catch(function(err) {
           reject(err);
@@ -83,24 +74,31 @@ export default {
     }
   },
 
-  //TODO: deprecate dis
-  // checkAuth() {
-  //   var auth = localStorage.getItem('user');
-  //   if (auth) {
-  //     this.user = auth;
-  //   } else {
-  //     this.user = {
-  //       authenticated: false,
-  //       username: null,
-  //       authdata: null
-  //     };
-  //   }
-  // },
+  getUserInfo() {
+    return new Promise(function(fulfill, reject) {
+      var item = localStorage.getItem('user');
+      if (item) {
+        var user = JSON.parse(item);
+        api.get('/user?username=' + user.username + '&populate=[roles]').then(function(res) {
+            var data = res.data[0];
+            data.createdAt = new Date(res.data[0].createdAt);
+            data.updatedAt = new Date(res.data[0].updatedAt);
+            data.birthDate = new Date(res.data[0].birthDate);
+            fulfill(data);
+          })
+          .catch(function(err) {
+            reject(err);
+          });
+      } else {
+        reject('User is not logged in.');
+      }
+    });
+  },
 
   // TODO: not sure if I even need this
   // The object to be passed as a header for authenticated requests
   getAuthHeader() {
-    var user = localStorage.getItem('user');
+    var user = JSON.parse(localStorage.getItem('user'));
     return {
       'Authorization': 'Basic ' + user.authdata
     };

@@ -13,7 +13,7 @@
 module.exports = {
 
   // Source: https://github.com/balderdashy/sails/issues/2691s
-  hookTimeout: 30000, // 30 seconds
+  hookTimeout: 300000, // 5 minutes
 
   /***************************************************************************
    * Set the default database connection for models in the production        *

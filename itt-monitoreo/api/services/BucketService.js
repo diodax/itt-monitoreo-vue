@@ -223,9 +223,3 @@ function handleBucketValues(buckets, totalPoints) {
   }
   return result;
 }
-
-function update(object, objectPropertyString, objectPropertyValue) {
-  const changedValue = objectPropertyValue * objectPropertyValue;
-  _.set(object, objectPropertyString, changedValue);
-  return object;
-}

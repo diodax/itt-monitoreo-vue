@@ -5,14 +5,12 @@ import router from './router';
 import VueResource from 'vue-resource';
 import App from './App';
 import auth from './services/auth';
-import TableComponent from 'vue-table-component';
 import VeeValidate from 'vee-validate';
 import VueNotifications from 'vue-notifications';
 import miniToastr from 'mini-toastr';
 
 Vue.config.productionTip = false;
 Vue.use(VueResource);
-Vue.use(TableComponent);  //TODO: Deprecate dis
 Vue.use(VeeValidate);
 
 const toastTypes = {

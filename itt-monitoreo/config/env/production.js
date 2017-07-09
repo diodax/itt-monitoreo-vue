@@ -21,14 +21,14 @@ module.exports = {
    ***************************************************************************/
 
   models: {
-    connection: 'mongoLabsProdServer'
+    connection: 'mongoLabsDevServer'
   },
 
   /***************************************************************************
    * Set the port in the production environment to 80                        *
    ***************************************************************************/
 
-  port: 80,
+  port: 443,
 
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *

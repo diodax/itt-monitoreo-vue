@@ -5,6 +5,8 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "assert": "^1.4.1",
+    "bluebird": "^3.5.0",
     "eslint-friendly-formatter": "^3.0.0",
     "include-all": "^1.0.0",
     "moment": "^2.18.1",

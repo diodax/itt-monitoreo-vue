@@ -57,4 +57,7 @@ module.exports.routes = {
     action: 'index'
   },
 
+  'GET /bucket': 'BucketController.find',
+  'POST /bucket': 'BucketController.create',
+
 };

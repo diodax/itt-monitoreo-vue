@@ -18,7 +18,7 @@
       </a>
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
-        <ul class="nav navbar-nav">          
+        <ul class="nav navbar-nav">
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -31,7 +31,7 @@
                 <img v-bind:src="user.gravatarUrl" class="img-circle" alt="User Image">
 
                 <p>
-                  {{user.firstName + ' ' + user.lastName}} - <span class="first-letter">{{user.roles[0].name}}</span>
+                  {{user.firstName + ' ' + user.lastName}} - <span class="first-letter">{{getRoles(user)}}</span>
                   <small>Member since {{ moment(user.createdAt).format('MMMM YYYY') }}</small>
                 </p>
               </li>
@@ -81,6 +81,15 @@
     methods: {
       logout() { return this.$root.$options.components.App.methods.logout(); },
       moment() { return moment(); },
+      getRoles(user) {
+        var names = [];
+        if (typeof user.roles !== 'undefined') {
+          names = user.roles.map(function(x) {
+            return x.name;
+          });
+        }
+        return names.join(", ");
+      },
     },
     created() {
       let self = this;

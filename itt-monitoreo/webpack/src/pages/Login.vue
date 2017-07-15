@@ -76,7 +76,7 @@ export default {
       };
       auth.login(credentials).then(function(res){
         router.push('/dashboard');
-        self.showLoginSucces();
+        self.showLoginSuccess();
       }).catch(function(err){
         console.log(err);
         self.showLoginError();
@@ -84,7 +84,7 @@ export default {
     },
   },
   notifications: {
-    showLoginSucces: {
+    showLoginSuccess: {
       title: 'Login Succesful',
       message: 'Authentication complete',
       type: 'info' //Default: 'info', also you can use VueNotifications.type.error instead of 'error'

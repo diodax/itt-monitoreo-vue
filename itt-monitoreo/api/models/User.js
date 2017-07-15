@@ -82,6 +82,25 @@ _.merge(exports, {
 
   },
 
+  // Lifecycle callbacks
+  beforeValidate: function(values, cb) {
+    // Makes sure the array properties are actually arrays
+    if (values.phoneNumbers && !_.isArray(values.phoneNumbers)) {
+      values.phoneNumbers = [values.phoneNumbers];
+    }
+
+    if (values.addresses && !_.isArray(values.addresses)) {
+      values.addresses = [values.addresses];
+    }
+
+    if (values.employers && !_.isArray(values.employers)) {
+      values.employers = [values.employers];
+    }
+
+    return cb();
+  },
+
+
   // Custom types / validation rules
   // (available for use in this model's attribute definitions above)
   types: {

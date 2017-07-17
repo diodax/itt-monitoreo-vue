@@ -18,6 +18,9 @@ import AppointmentList from '@/pages/appointments/AppointmentList';
 import AppointmentAdd from '@/pages/appointments/AppointmentAdd';
 import AppointmentEdit from '@/pages/appointments/AppointmentEdit';
 
+// Doctor
+import DoctorAppointmentList from '@/pages/doctor/DoctorAppointmentList';
+
 Vue.use(Router);
 
 export default new Router({
@@ -100,6 +103,18 @@ export default new Router({
         },
 
         // End of Appointment CRUD routes
+
+        // Doctor-specific routes
+
+        {
+          path: 'doctor/:id/appointment',
+          name: 'DoctorAppointmentList',
+          component: DoctorAppointmentList,
+          meta: { requiresAuth: true }
+        },
+
+        // End of Doctor-specific routes
+
       ]
     },
     {

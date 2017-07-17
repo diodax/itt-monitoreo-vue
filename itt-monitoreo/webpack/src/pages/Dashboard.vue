@@ -91,7 +91,7 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>150</h3>
+              <h3>{{boxes.assignedPatients}}</h3>
 
               <p>Assigned Patients</p>
             </div>
@@ -106,14 +106,14 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>23</h3>
+              <h3>{{boxes.pendingAppointments}}</h3>
 
               <p>Pending Appointments</p>
             </div>
             <div class="icon">
               <i class="ion ion-ios-calendar"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <router-link :to="{ path: '/doctor/' + user.id + '/appointment' }" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></router-link>
           </div>
         </div>
         <!-- ./col -->
@@ -124,26 +124,10 @@
         <!-- Left col -->
         <section class="col-lg-7">
 
-          <!-- Custom tabs (Charts with tabs)-->
-          <div class="nav-tabs-custom">
-            <!-- Tabs within a box -->
-            <ul class="nav nav-tabs pull-right">
-              <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
-              <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
-              <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
-            </ul>
-            <div class="tab-content no-padding">
-              <!-- Morris chart - Sales -->
-              <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
-              <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
-            </div>
-          </div>
-          <!-- /.nav-tabs-custom -->
-
           <!-- TABLE: LATEST ORDERS -->
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Latest Orders</h3>
+              <h3 class="box-title">Status Report</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -156,81 +140,33 @@
               <div class="table-responsive">
                 <table class="table no-margin">
                   <thead>
-                    <tr>
-                      <th>Order ID</th>
-                      <th>Item</th>
+                    <tr role="row">
+                      <th style="width: 1px;">#</th>
+                      <th>Patient</th>
+                      <th>Insurance Company</th>
                       <th>Status</th>
-                      <th>Popularity</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                      <td>Call of Duty IV</td>
-                      <td><span class="label label-success">Shipped</span></td>
+                    <tr v-for="(row, index) in patients">
+                      <td>{{ index + 1 }}</td>
+                      <td>{{ row.firstName + ' ' + row.lastName }}</td>
+                      <td>{{ row.insuranceCompany }}</td>
                       <td>
-                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
+                        <span class="label"
+                              :class="{ 'label-success': row.status === 'stable', 'label-danger': row.status === 'critical', 'label-default': row.status === 'offline' }">{{ row.status }}</span>
                       </td>
+
                     </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="label label-warning">Pending</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>iPhone 6 Plus</td>
-                      <td><span class="label label-danger">Delivered</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="label label-info">Processing</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00c0ef" data-height="20">90,80,-90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                      <td>Samsung Smart TV</td>
-                      <td><span class="label label-warning">Pending</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f39c12" data-height="20">90,80,-90,70,61,-83,68</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                      <td>iPhone 6 Plus</td>
-                      <td><span class="label label-danger">Delivered</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#f56954" data-height="20">90,-80,90,70,-61,83,63</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                      <td>Call of Duty IV</td>
-                      <td><span class="label label-success">Shipped</span></td>
-                      <td>
-                        <div class="sparkbar" data-color="#00a65a" data-height="20">90,80,90,-70,61,-83,63</div>
-                      </td>
-                    </tr>
+
                   </tbody>
                 </table>
               </div>
               <!-- /.table-responsive -->
+              <!-- Loading (remove the following to stop the loading)-->
+              <div v-if="loadingStatusTable" class="overlay"><i class="fa fa-refresh fa-spin"></i></div>
             </div>
             <!-- /.box-body -->
-            <div class="box-footer clearfix">
-              <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Place New Order</a>
-              <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">View All Orders</a>
-            </div>
-            <!-- /.box-footer -->
           </div>
           <!-- /.box -->
 
@@ -521,6 +457,12 @@ export default {
       user: {},
       datacollection: {},
       updateInterval: 500,  // fetch data over x milliseconds
+      boxes: {
+        assignedPatients: 0,
+        pendingAppointments: 0
+      },
+      loadingStatusTable: true,
+      patients: [],
     };
   },
   components: {
@@ -566,11 +508,36 @@ export default {
           console.log(error);
         });
     },
+    getPendingAppointments(userId) {
+      let self = this;
+      api.get('doctor/' + userId + '/appointment').then(function(response) {
+          self.boxes.pendingAppointments = response.data.length;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    getAssignedPatients(userId) {
+      let self = this;
+      api.get('doctor/' + userId + '/patient').then(function(response) {
+          self.boxes.assignedPatients = response.data.length;
+          self.loadingStatusTable = false;
+          self.patients = response.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
   },
   created() {
     let self = this;
     auth.getUserInfo().then(function(data) {
         self.user = data;
+        if (self.isRole('doctor')) {
+          self.getPendingAppointments(self.user.id);
+          self.getAssignedPatients(self.user.id);
+        }
+
         setTimeout(function() {
           console.log('Calling fillData()...')
           self.fillData();

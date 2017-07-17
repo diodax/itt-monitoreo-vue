@@ -60,4 +60,19 @@ module.exports.routes = {
   'GET /bucket': 'BucketController.find',
   'POST /bucket': 'BucketController.create',
 
+  'GET /doctor/:id/appointment': {
+    controller: 'appointment',
+    action: 'doctorIndex'
+  },
+
+  'GET /doctor/:id/event': {
+    controller: 'event',
+    action: 'doctorIndex'
+  },
+
+  'GET /doctor/:id/patient': {
+    controller: 'patient',
+    action: 'doctorIndex'
+  },
+
 };

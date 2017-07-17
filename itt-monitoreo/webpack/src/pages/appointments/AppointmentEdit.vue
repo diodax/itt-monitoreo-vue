@@ -92,6 +92,7 @@
 <script>
 import api from '../../services/api';
 import router from '../../router/index';
+import moment from 'moment';
 
 export default {
   name: 'AppointmentEdit',
@@ -108,6 +109,8 @@ export default {
     let self = this;
     api.get('/appointment/' + self.id).then(function(response) {
         self.model = response.data;
+        self.model.startDate = moment(response.data.startDate).format('YYYY-MM-DD');
+        self.model.endDate = moment(response.data.endDate).format('YYYY-MM-DD');
       })
       .catch(function(error) {
         console.log(error);
@@ -130,6 +133,8 @@ export default {
   methods: {
     submitForm () {
       let self = this;
+      self.model.startDate = moment(self.model.startDate).format('YYYY-MM-DDTHH:mm:ss');
+      self.model.endDate = moment(self.model.endDate).format('YYYY-MM-DDTHH:mm:ss');
       api.put('/appointment/' + self.id, self.model).then(function(response) {
         console.log(response);
         router.push('/appointment');

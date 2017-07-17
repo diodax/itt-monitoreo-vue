@@ -63,7 +63,8 @@ _.merge(exports, {
     },
     status: {
       type: 'string',
-      enum: ['stable', 'critical']
+      enum: ['stable', 'critical', 'offline'],
+      defaultsTo: 'offline'
     },
     insuranceCompany: {
       type: 'string'

@@ -27,7 +27,6 @@
               <thead>
                 <tr role="row">
                   <th style="width: 1px;">#</th>
-                  <th>Doctor</th>
                   <th>Patient</th>
                   <th>Appointed Date</th>
                   <th style="white-space: nowrap !important;"></th>
@@ -36,12 +35,11 @@
               <tbody>
                 <tr role="row" v-for="(row, index) in list">
                   <td>{{ index + 1 }}</td>
-                  <td>{{ row.doctor.firstName + ' ' + row.doctor.lastName + ' (' + row.doctor.username + ')' }}</td>
                   <td>{{ row.patient.firstName + ' ' + row.patient.lastName + ' (' + row.patient.username + ')' }}</td>
                   <td>{{ formatDate(row.startDate) }}</td>
                   <td style="width: 1%; white-space: nowrap !important; text-align: right;">
                     <router-link :to="{ path: '/appointment/' + row.id }" class='btn btn-default'>Edit</router-link>
-                    <a v-on:click="deleteAppointment(row.id)" class='btn btn-danger'>Delete</a>
+                    <a class='btn btn-danger'>Delete</a>
                   </td>
                 </tr>
               </tbody>
@@ -78,13 +76,12 @@
 import api from '../../services/api';
 import Calendar from '../../components/Calendar';
 import {formatDate} from '../../services/filters';
-import Modal from 'vue-bootstrap-modal';
-import router from '@/router/index';
 
 export default {
   name: 'AppointmentList',
   data() {
     return {
+      id: this.$route.params.id,
       title: 'List of Appointments',
       list: [],
       events: [],
@@ -93,32 +90,14 @@ export default {
     };
   },
   components: {
-    Calendar,
-    Modal
+    Calendar
   },
   methods: {
-    formatDate,
-    deleteAppointment(id) {
-      let self = this;
-      api.delete('/appointment/' + id).then(function(response) {
-          console.log(response);
-          router.go({
-              path: router.path,
-              query: {
-                  t: + new Date()
-              }
-          });
-          self.showDeleteSuccess();
-        })
-        .catch(function(error) {
-          console.log(error);
-          self.showDeleteError();
-        });
-    },
+    formatDate
   },
   created() {
     let self = this;
-    api.get('/appointment?populate=[doctor,patient]').then(function(response) {
+    api.get('doctor/' + self.id + '/appointment').then(function(response) {
         self.list = response.data;
         self.loadingTable = false;
       })
@@ -126,25 +105,13 @@ export default {
         console.log(error);
       });
 
-    api.get('/event').then(function(response) {
+    api.get('doctor/' + self.id + '/event').then(function(response) {
         self.events = response.data;
         self.loadingEvents = false;
       })
       .catch(function(error) {
         console.log(error);
       });
-  },
-  notifications: {
-    showDeleteSuccess: {
-      title: 'Delete Succesful',
-      message: 'Appointment delete complete',
-      type: 'success' //Default: 'info', also you can use VueNotifications.type.error instead of 'error'
-    },
-    showDeleteError: {
-      title: 'Delete Failed',
-      message: 'Failed to delete appointment',
-      type: 'error' //Default: 'info', also you can use VueNotifications.type.error instead of 'error'
-    }
   },
 }
 </script>

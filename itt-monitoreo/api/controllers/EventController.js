@@ -28,6 +28,32 @@ module.exports = {
   },
 
   /**
+   * `EventController.doctorIndex()`
+   */
+  doctorIndex: function (req, res) {
+    var id = req.param('id');
+
+    if (typeof id === 'undefined') {
+      return res.badRequest();
+    } else {
+      Appointment.find({ doctor: id })
+        .populate('doctor')
+        .populate('patient')
+        .then(function onSuccess(appointments) {
+  				return res.json(appointments.map(function(element) {
+  					return {
+  						title: 'Dr. ' + element.doctor.lastName + ': Meeting with ' + element.patient.firstName,
+  						start: element.startDate,
+  						end: element.endDate
+  					};
+  				}));
+        }).catch(function onFailure(err) {
+          return res.serverError(err);
+        });
+    }
+  },
+
+  /**
    * `EventController.find()`
    */
   find: function (req, res) {

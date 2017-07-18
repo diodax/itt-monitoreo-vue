@@ -138,10 +138,24 @@ export default {
       api.put('/appointment/' + self.id, self.model).then(function(response) {
         console.log(response);
         router.push('/appointment');
+        self.showEditSuccess();
       })
       .catch(function(error) {
         console.log(error);
+        self.showEditError();
       });
+    }
+  },
+  notifications: {
+    showEditSuccess: {
+      title: 'Edit Succesful',
+      message: 'Appointment edit complete',
+      type: 'success' //Default: 'info', also you can use VueNotifications.type.error instead of 'error'
+    },
+    showEditError: {
+      title: 'Edit Failed',
+      message: 'Failed to edit appointment',
+      type: 'error' //Default: 'info', also you can use VueNotifications.type.error instead of 'error'
     }
   },
 }

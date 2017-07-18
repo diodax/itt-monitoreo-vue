@@ -75,4 +75,13 @@ module.exports.routes = {
     action: 'doctorIndex'
   },
 
+  'GET /doctor/:id/prescription': {
+    controller: 'prescription',
+    action: 'doctorIndex'
+  },
+
+  'GET /patient/:id/prescription': {
+    controller: 'prescription',
+    action: 'patientIndex'
+  },
 };

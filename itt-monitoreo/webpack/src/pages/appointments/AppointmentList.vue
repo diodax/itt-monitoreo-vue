@@ -137,7 +137,7 @@ export default {
   notifications: {
     showDeleteSuccess: {
       title: 'Delete Succesful',
-      message: 'Appointment delete complete',
+      message: 'Appointment deletion complete',
       type: 'success' //Default: 'info', also you can use VueNotifications.type.error instead of 'error'
     },
     showDeleteError: {

@@ -79,7 +79,7 @@ export default {
       var item = localStorage.getItem('user');
       if (item) {
         var user = JSON.parse(item);
-        api.get('/user?username=' + user.username + '&populate=[roles]').then(function(res) {
+        api.get('/user?username=' + user.username + '&populate=[roles,assignedDoctor,assignedPatient]').then(function(res) {
             var data = res.data[0];
             data.createdAt = new Date(res.data[0].createdAt);
             data.updatedAt = new Date(res.data[0].updatedAt);

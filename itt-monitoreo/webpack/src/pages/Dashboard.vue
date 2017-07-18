@@ -98,7 +98,7 @@
             <div class="icon">
               <i class="ion-ios-person"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <router-link :to="{ path: '/doctor/' + user.id + '/patient' }" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></router-link>
           </div>
         </div>
         <!-- ./col -->
@@ -154,7 +154,9 @@
                       <td>{{ row.insuranceCompany }}</td>
                       <td>
                         <span class="label"
-                              :class="{ 'label-success': row.status === 'stable', 'label-danger': row.status === 'critical', 'label-default': row.status === 'offline' }">{{ row.status }}</span>
+                              :class="{ 'label-success': row.status === 'stable', 'label-danger': row.status === 'critical', 'label-default': row.status === 'offline' }">
+                              {{ row.status }}
+                        </span>
                       </td>
 
                     </tr>
@@ -273,7 +275,7 @@
             <div class="icon">
               <i class="ion ion-ios-calendar"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <router-link :to="{ path: '/appointment' }" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></router-link>
           </div>
         </div>
         <!-- ./col -->
@@ -288,7 +290,7 @@
             <div class="icon">
               <i class="ion ion-ios-speedometer"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></span></a>
           </div>
         </div>
         <!-- ./col -->
@@ -296,14 +298,14 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>2</h3>
+              <h3>1</h3>
 
               <p>Assigned Relatives</p>
             </div>
             <div class="icon">
               <i class="ion-ios-people"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -318,7 +320,7 @@
             <div class="icon">
               <i class="ion ion-ios-pulse-strong"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -435,6 +437,207 @@
 
     </div>
     <!-- Relative elements -->
+    <div v-if="isRole('relative')">
+
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3>2</h3>
+
+              <p>Sheduled Appointments</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-ios-calendar"></i>
+            </div>
+            <router-link :to="{ path: '/appointment' }" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></router-link>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>90<sup style="font-size: 20px;">%</sup></h3>
+
+              <p>Measurement Uptime</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-ios-speedometer"></i>
+            </div>
+            <a href="#" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>2</h3>
+
+              <p>Pending Prescriptions</p>
+            </div>
+            <div class="icon">
+              <i class="ion-ios-people"></i>
+            </div>
+            <router-link :to="{ path: '/prescription' }" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></router-link>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>1</h3>
+
+              <p>Alerts this Month</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-ios-pulse-strong"></i>
+            </div>
+            <a href="#" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
+      <!-- /.row -->
+
+      <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-7">
+
+          <!-- Custom tabs (Charts with tabs)-->
+          <div class="nav-tabs-custom">
+            <!-- Tabs within a box -->
+            <ul class="nav nav-tabs pull-right">
+              <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
+              <!-- <li><a href="#sales-chart" data-toggle="tab">Donut</a></li> -->
+              <li class="pull-left header"><i class="fa fa-area-chart"></i> Sensor Readings</li>
+            </ul>
+            <div class="tab-content no-padding">
+              <!-- Morris chart - Sales -->
+              <div class="chart tab-pane active" id="revenue-chart" style="position: relative;">
+                <line-chart :chart-data="datacollection" :height="200"></line-chart>
+              </div>
+              <!-- <div class="chart tab-pane" id="sales-chart" style="position: relative;"></div> -->
+            </div>
+          </div>
+          <!-- /.nav-tabs-custom -->
+
+        </section>
+        <!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        <section class="col-lg-5">
+
+          <!-- Widget: user widget style 1 -->
+          <div class="box box-widget widget-user-2">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-yellow">
+              <div class="widget-user-image">
+                <img class="img-circle" v-bind:src="user.assignedPatient.gravatarUrl" alt="Patient Avatar">
+              </div>
+              <!-- /.widget-user-image -->
+              <h3 class="widget-user-username">{{user.assignedPatient.firstName + ' ' + user.assignedPatient.lastName}}</h3>
+              <h5 class="widget-user-desc">Birth Date: {{ moment(user.assignedPatient.birthDate).format('MMMM DD YYYY') }}</h5>
+            </div>
+            <div class="box-footer no-padding">
+              <ul class="nav nav-stacked">
+                <li><a>Status <span class="pull-right badge"
+                  :class="{ 'bg-green': user.assignedPatient.status === 'stable', 'bg-red': user.assignedPatient.status === 'critical', 'bg-gray': user.assignedPatient.status === 'offline' }">
+                  {{ user.assignedPatient.status }}</span></a>
+                </li>
+                <li><a>Insurance Company <span class="pull-right text-muted">{{ user.assignedPatient.insuranceCompany }}</span></a></li>
+                <li><a>Address(es) <span class="pull-right text-muted">{{ user.assignedPatient.addresses }}</span></a></li>
+                <li><a>Phone Number(s) <span class="pull-right text-muted">{{ user.assignedPatient.phoneNumbers }}</span></a></li>
+              </ul>
+            </div>
+          </div>
+          <!-- /.widget-user -->
+
+          <!-- Calendar -->
+          <div class="box box-solid bg-green-gradient">
+            <div class="box-header">
+              <i class="fa fa-calendar"></i>
+
+              <h3 class="box-title">Calendar</h3>
+              <!-- tools box -->
+              <div class="pull-right box-tools">
+                <!-- button with a dropdown -->
+                <div class="btn-group">
+                  <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
+                      <i class="fa fa-bars"></i></button>
+                  <ul class="dropdown-menu pull-right" role="menu">
+                    <li><a href="#">Add new event</a></li>
+                    <li><a href="#">Clear events</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">View calendar</a></li>
+                  </ul>
+                </div>
+                <button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                <button type="button" class="btn btn-success btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+                  </button>
+              </div>
+              <!-- /. tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body no-padding">
+              <!--The calendar -->
+              <div class="calendar-dashboard" style="width: 100%" v-datepicker></div>
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer text-black">
+              <div class="row">
+                <div class="col-sm-6">
+                  <!-- Progress bars -->
+                  <div class="clearfix">
+                    <span class="pull-left">Task #1</span>
+                    <small class="pull-right">90%</small>
+                  </div>
+                  <div class="progress xs">
+                    <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
+                  </div>
+
+                  <div class="clearfix">
+                    <span class="pull-left">Task #2</span>
+                    <small class="pull-right">70%</small>
+                  </div>
+                  <div class="progress xs">
+                    <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
+                  </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6">
+                  <div class="clearfix">
+                    <span class="pull-left">Task #3</span>
+                    <small class="pull-right">60%</small>
+                  </div>
+                  <div class="progress xs">
+                    <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
+                  </div>
+
+                  <div class="clearfix">
+                    <span class="pull-left">Task #4</span>
+                    <small class="pull-right">40%</small>
+                  </div>
+                  <div class="progress xs">
+                    <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
+                  </div>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+          </div>
+          <!-- /.box -->
+
+        </section>
+        <!-- right col -->
+      </div>
+
+    </div>
 
   </section>
 
@@ -444,10 +647,11 @@
 <script>
 import $ from 'jquery';
 import '../../static/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js';
-import auth from '../services/auth';
+import auth from '@/services/auth';
 import LineChart from '@/components/LineChart';
 import Datepicker from '@/directives/Datepicker';
 import api from '@/services/api';
+import moment from 'moment';
 
 export default {
   name: 'Dashboard',
@@ -472,6 +676,7 @@ export default {
     Datepicker,
   },
   methods: {
+    moment() { return moment(); },
     isRole(role) {
       if (this.user.roles) {
         var found = this.user.roles.some(function (el) {

@@ -241,11 +241,11 @@ export default {
       api.post('/register', self.model).then(function(response) {
           console.log(response);
           router.push('/user');
-          self.showEditSuccess();
+          self.showAddSuccess();
         })
         .catch(function(error) {
           console.log(error);
-          self.showEditError();
+          self.showAddError();
         });
     },
     isRole(role) {
@@ -264,12 +264,12 @@ export default {
     },
   },
   notifications: {
-    showEditSuccess: {
+    showAddSuccess: {
       title: 'Creation Succesful',
       message: 'User creation complete',
       type: 'success' //Default: 'info', also you can use VueNotifications.type.error instead of 'error'
     },
-    showEditError: {
+    showAddError: {
       title: 'Creation Failed',
       message: 'Failed to create user',
       type: 'error' //Default: 'info', also you can use VueNotifications.type.error instead of 'error'

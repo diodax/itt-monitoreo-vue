@@ -18,8 +18,18 @@ import AppointmentList from '@/pages/appointments/AppointmentList';
 import AppointmentAdd from '@/pages/appointments/AppointmentAdd';
 import AppointmentEdit from '@/pages/appointments/AppointmentEdit';
 
+// Prescription
+import PrescriptionList from '@/pages/prescriptions/PrescriptionList';
+import PrescriptionAdd from '@/pages/prescriptions/PrescriptionAdd';
+import PrescriptionEdit from '@/pages/prescriptions/PrescriptionEdit';
+
 // Doctor
 import DoctorAppointmentList from '@/pages/doctor/DoctorAppointmentList';
+import DoctorPrescriptionList from '@/pages/doctor/DoctorPrescriptionList';
+import DoctorPatientList from '@/pages/doctor/DoctorPatientList';
+
+// patient
+import PatientDetail from '@/pages/patient/PatientDetail';
 
 Vue.use(Router);
 
@@ -104,6 +114,31 @@ export default new Router({
 
         // End of Appointment CRUD routes
 
+        // Prescription CRUD routes
+
+        {
+          path: 'prescription',
+          name: 'PrescriptionList',
+          component: PrescriptionList,
+          meta: { requiresAuth: true }
+        },
+
+        {
+          path: 'prescription/add',
+          name: 'PrescriptionAdd',
+          component: PrescriptionAdd,
+          meta: { requiresAuth: true }
+        },
+
+        {
+          path: 'prescription/:id',
+          name: 'PrescriptionEdit',
+          component: PrescriptionEdit,
+          meta: { requiresAuth: true }
+        },
+
+        // End of Appointment CRUD routes
+
         // Doctor-specific routes
 
         {
@@ -113,7 +148,28 @@ export default new Router({
           meta: { requiresAuth: true }
         },
 
+        {
+          path: 'doctor/:id/patient',
+          name: 'DoctorPatientList',
+          component: DoctorPatientList,
+          meta: { requiresAuth: true }
+        },
+
+        {
+          path: 'doctor/:id/prescription',
+          name: 'DoctorPrescriptionList',
+          component: DoctorPrescriptionList,
+          meta: { requiresAuth: true }
+        },
+
         // End of Doctor-specific routes
+
+        {
+          path: 'patient/:id',
+          name: 'PatientDetail',
+          component: PatientDetail,
+          meta: { requiresAuth: true }
+        },
 
       ]
     },

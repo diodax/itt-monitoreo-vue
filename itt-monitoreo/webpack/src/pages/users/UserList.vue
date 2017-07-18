@@ -49,7 +49,7 @@
                   </td>
                   <td style="width: 1%; white-space: nowrap !important; text-align: right;">
                     <router-link :to="{ path: '/user/' + row.id }" class='btn btn-default'>Edit</router-link>
-                    <a class='btn btn-danger'>Delete</a>
+                    <a v-on:click="deleteUser(row.id)" class='btn btn-danger'>Delete</a>
                   </td>
                 </tr>
               </tbody>
@@ -68,6 +68,7 @@
 <script>
 import api from '@/services/api';
 import {formatDate} from '@/services/filters';
+import router from '@/router/index';
 
 export default {
   name: 'UserList',
@@ -79,7 +80,24 @@ export default {
     };
   },
   methods: {
-    formatDate
+    formatDate,
+    deleteUser(id) {
+      let self = this;
+      api.delete('/user/' + id).then(function(response) {
+          console.log(response);
+          router.go({
+              path: router.path,
+              query: {
+                  t: + new Date()
+              }
+          });
+          self.showDeleteSuccess();
+        })
+        .catch(function(error) {
+          console.log(error);
+          self.showDeleteError();
+        });
+    },
   },
   created() {
     let self = this;
@@ -90,6 +108,18 @@ export default {
       .catch(function(error) {
         console.log(error);
       });
+  },
+  notifications: {
+    showDeleteSuccess: {
+      title: 'Delete Succesful',
+      message: 'User deletion complete',
+      type: 'success' //Default: 'info', also you can use VueNotifications.type.error instead of 'error'
+    },
+    showDeleteError: {
+      title: 'Delete Failed',
+      message: 'Failed to delete user',
+      type: 'error' //Default: 'info', also you can use VueNotifications.type.error instead of 'error'
+    }
   },
 };
 </script>

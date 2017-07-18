@@ -132,10 +132,24 @@ export default {
       api.post('/appointment', self.model).then(function(response) {
         console.log(response);
         router.push('/appointment');
+        self.showAddSuccess();
       })
       .catch(function(error) {
         console.log(error);
+        self.showAddError();
       });
+    }
+  },
+  notifications: {
+    showAddSuccess: {
+      title: 'Creation Succesful',
+      message: 'Appointment creation complete',
+      type: 'success' //Default: 'info', also you can use VueNotifications.type.error instead of 'error'
+    },
+    showAddError: {
+      title: 'Creation Failed',
+      message: 'Failed to create appointment',
+      type: 'error' //Default: 'info', also you can use VueNotifications.type.error instead of 'error'
     }
   },
 }

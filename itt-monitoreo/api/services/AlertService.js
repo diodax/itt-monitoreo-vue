@@ -25,7 +25,7 @@ module.exports = {
   isWithinThreshold: function(options, done) {
     assert.ok(typeof options !== 'undefined', 'argument "options" must be specified');
     assert.equal(typeof(options.username), 'string', 'argument "options.username" must be a string');
-    assert.ok(_.isFinite(options.bpm), 'argument "options.bpm" must be a finite number');
+    //assert.ok(_.isFinite(options.bpm), 'argument "options.bpm" must be a finite number');
 
     // default parameter for the callback function
     done = typeof done !== 'undefined' ? done : function() {};

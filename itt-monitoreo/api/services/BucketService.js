@@ -26,7 +26,7 @@ module.exports = {
       assert.ok(typeof data !== 'undefined', 'argument "data" must be specified');
       assert.equal(typeof(data.username), 'string', 'argument "data.username" must be a string');
       assert.ok(moment(data.timestamp, 'YYYY-MM-DDTHH:mm:ss').isValid(),'argument "data.timestamp" must be a valid YYYY-MM-DDTHH:mm:ss datetime string');
-      assert.ok(_.isFinite(data.bpm) || (data.bpm === null && typeof data.bpm === 'object'), 'argument "data.bpm" must be null or a finite number');
+      //assert.ok(_.isFinite(data.bpm) || (data.bpm === null && typeof data.bpm === 'object'), 'argument "data.bpm" must be null or a finite number');
 
       // default parameter for the callback function
       done = typeof done !== 'undefined' ? done : function() {};

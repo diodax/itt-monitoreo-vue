@@ -58,8 +58,22 @@
                 {{ user.status }}</span></a>
               </li>
               <li><a>Insurance Company <span class="pull-right text-muted">{{ user.insuranceCompany }}</span></a></li>
-              <li><a>Address(es) <span class="pull-right text-muted">{{ user.addresses }}</span></a></li>
-              <li><a>Phone Number(s) <span class="pull-right text-muted">{{ user.phoneNumbers }}</span></a></li>
+              <li>
+                <a>Address(es)
+                  <span class="pull-right text-muted">
+                    <ul><li v-for="item in user.addresses">{{item}}</li></ul>
+                  </span>
+                </a>
+                <br/>
+              </li>
+              <li>
+                <a>Phone Number(s)
+                  <span class="pull-right text-muted">
+                    <ul><li v-for="item in user.phoneNumbers">{{item}}</li></ul>
+                  </span>
+                </a>
+                <br/>
+              </li>
             </ul>
           </div>
         </div>

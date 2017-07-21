@@ -58,6 +58,7 @@ module.exports.routes = {
   },
 
   'GET /bucket': 'BucketController.find',
+  'GET /patient/:id/bucket/latest': 'BucketController.findLatest',
   'POST /bucket': 'BucketController.create',
 
   'GET /doctor/:id/appointment': {
@@ -84,4 +85,7 @@ module.exports.routes = {
     controller: 'prescription',
     action: 'patientIndex'
   },
+
+  'GET /doctor/:id/alertlog': 'AlertLogController.doctorIndex',
+  'GET /patient/:id/alertlog': 'AlertLogController.patientIndex',
 };

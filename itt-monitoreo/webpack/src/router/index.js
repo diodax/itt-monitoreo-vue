@@ -22,6 +22,7 @@ import AppointmentEdit from '@/pages/appointments/AppointmentEdit';
 import PrescriptionList from '@/pages/prescriptions/PrescriptionList';
 import PrescriptionAdd from '@/pages/prescriptions/PrescriptionAdd';
 import PrescriptionEdit from '@/pages/prescriptions/PrescriptionEdit';
+import PrescriptionDetail from '@/pages/prescriptions/PrescriptionDetail';
 
 // Doctor
 import DoctorAppointmentList from '@/pages/doctor/DoctorAppointmentList';
@@ -30,6 +31,7 @@ import DoctorPatientList from '@/pages/doctor/DoctorPatientList';
 
 // patient
 import PatientDetail from '@/pages/patient/PatientDetail';
+import PatientAlertLogsList from '@/pages/alertlogs/PatientAlertLogsList';
 
 Vue.use(Router);
 
@@ -137,6 +139,13 @@ export default new Router({
           meta: { requiresAuth: true }
         },
 
+        {
+          path: 'prescription/detail/:id',
+          name: 'PrescriptionDetail',
+          component: PrescriptionDetail,
+          meta: { requiresAuth: true }
+        },
+
         // End of Appointment CRUD routes
 
         // Doctor-specific routes
@@ -165,12 +174,18 @@ export default new Router({
         // End of Doctor-specific routes
 
         {
+          path: 'patient/:id/alertlog',
+          name: 'PatientAlertLogsList',
+          component: PatientAlertLogsList,
+          meta: { requiresAuth: true }
+        },
+
+        {
           path: 'patient/:id',
           name: 'PatientDetail',
           component: PatientDetail,
           meta: { requiresAuth: true }
         },
-
       ]
     },
     {

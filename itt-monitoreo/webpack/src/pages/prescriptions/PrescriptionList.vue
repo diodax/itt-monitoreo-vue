@@ -40,6 +40,7 @@
                   <td>{{ row.patient.firstName + ' ' + row.patient.lastName + ' (' + row.patient.username + ')' }}</td>
                   <td>{{ formatDate(row.date) }}</td>
                   <td style="width: 1%; white-space: nowrap !important; text-align: right;">
+                    <router-link :to="{ path: '/prescription/detail/' + row.id }" class='btn btn-default'>View</router-link>
                     <router-link :to="{ path: '/prescription/' + row.id }" class='btn btn-default'>Edit</router-link>
                     <a v-on:click="deletePrescription(row.id)" class='btn btn-danger'>Delete</a>
                   </td>

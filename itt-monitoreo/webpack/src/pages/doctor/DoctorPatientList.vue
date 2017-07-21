@@ -47,7 +47,7 @@
                   <td style="width: 1%; white-space: nowrap !important; text-align: right;">
                     <router-link :to="{ path: '/patient/' + row.id }" class='btn btn-default'>Details</router-link>
                     <router-link :to="{ path: '/prescription' }" class='btn btn-default'>Prescriptions</router-link>
-                    <a class='btn btn-danger'>Unlink</a>
+                    <!-- <a class='btn btn-danger'>Unlink</a> -->
 
                     <!-- <router-link :to="{ path: '/user/' + row.id }" class='btn btn-default'>Edit</router-link>
                      -->

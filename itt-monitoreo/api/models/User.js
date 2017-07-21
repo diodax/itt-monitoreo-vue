@@ -52,10 +52,14 @@ _.merge(exports, {
     // Patient-exclusive attributes
     bpmThreshold: {
       type: 'array',
-      isArrayOfIntegers: true
+      //isArrayOfIntegers: true,
+      defaultsTo: function () {
+        return [90, 130];
+      }
     },
     requiredTics: {     // Mininum time (in tics) to wait before sending an alert
-      type: 'integer'
+      type: 'integer',
+      defaultsTo: 30
     },
     totalTics: {        // Counter that tells how many times the measurement has exceeded the threshold
       type: 'integer',

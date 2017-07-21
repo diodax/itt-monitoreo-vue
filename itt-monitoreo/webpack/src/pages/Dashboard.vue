@@ -22,14 +22,14 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>150</h3>
+              <h3>{{boxes.totalDoctors}}</h3>
 
               <p>Active Doctors</p>
             </div>
             <div class="icon">
               <i class="ion-ios-medkit"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <router-link :to="{ path: '/user' }" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></router-link>
           </div>
         </div>
         <!-- ./col -->
@@ -37,14 +37,14 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>53</h3>
+              <h3>{{boxes.totalPatients}}</h3>
 
               <p>Registered Patients</p>
             </div>
             <div class="icon">
               <i class="ion ion-person"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <router-link :to="{ path: '/user' }" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></router-link>
           </div>
         </div>
         <!-- ./col -->
@@ -52,14 +52,14 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>44</h3>
+              <h3>{{boxes.totalRelatives}}</h3>
 
               <p>Assigned Relatives</p>
             </div>
             <div class="icon">
               <i class="ion-ios-people"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <router-link :to="{ path: '/user' }" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></router-link>
           </div>
         </div>
         <!-- ./col -->
@@ -67,14 +67,14 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>1</h3>
+              <h3>{{boxes.totalPatients}}</h3>
 
               <p>Installed Devices</p>
             </div>
             <div class="icon">
               <i class="ion ion-pie-graph"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></span></a>
           </div>
         </div>
         <!-- ./col -->
@@ -190,10 +190,7 @@
                   <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
                       <i class="fa fa-bars"></i></button>
                   <ul class="dropdown-menu pull-right" role="menu">
-                    <li><a href="#">Add new event</a></li>
-                    <li><a href="#">Clear events</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">View calendar</a></li>
+                    <li><router-link :to="{ path: '/doctor/' + user.id + '/appointment' }">View list of events</router-link></li>
                   </ul>
                 </div>
                 <button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -209,48 +206,6 @@
               <div class="calendar-dashboard" style="width: 100%" v-datepicker></div>
             </div>
             <!-- /.box-body -->
-            <div class="box-footer text-black">
-              <div class="row">
-                <div class="col-sm-6">
-                  <!-- Progress bars -->
-                  <div class="clearfix">
-                    <span class="pull-left">Task #1</span>
-                    <small class="pull-right">90%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
-                  </div>
-
-                  <div class="clearfix">
-                    <span class="pull-left">Task #2</span>
-                    <small class="pull-right">70%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
-                  </div>
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-6">
-                  <div class="clearfix">
-                    <span class="pull-left">Task #3</span>
-                    <small class="pull-right">60%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
-                  </div>
-
-                  <div class="clearfix">
-                    <span class="pull-left">Task #4</span>
-                    <small class="pull-right">40%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
-                  </div>
-                </div>
-                <!-- /.col -->
-              </div>
-              <!-- /.row -->
-            </div>
           </div>
           <!-- /.box -->
 
@@ -268,7 +223,7 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>2</h3>
+              <h3>{{boxes.sheduledPatientAppointments}}</h3>
 
               <p>Sheduled Appointments</p>
             </div>
@@ -283,14 +238,14 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>90<sup style="font-size: 20px;">%</sup></h3>
+              <h3>{{boxes.measuredUptime}}<sup style="font-size: 20px;">%</sup></h3>
 
               <p>Measurement Uptime</p>
             </div>
             <div class="icon">
               <i class="ion ion-ios-speedometer"></i>
             </div>
-            <a href="#" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></span></a>
+            <a class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></span></a>
           </div>
         </div>
         <!-- ./col -->
@@ -298,14 +253,14 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>1</h3>
+              <h3>{{boxes.assignedRelatives}}</h3>
 
               <p>Assigned Relatives</p>
             </div>
             <div class="icon">
               <i class="ion-ios-people"></i>
             </div>
-            <a href="#" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
+            <router-link :to="{ path: '/user' }" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></router-link>
           </div>
         </div>
         <!-- ./col -->
@@ -313,14 +268,14 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>1</h3>
+              <h3>{{boxes.patientAlertsThisMonth}}</h3>
 
               <p>Alerts this Month</p>
             </div>
             <div class="icon">
               <i class="ion ion-ios-pulse-strong"></i>
             </div>
-            <a href="#" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
+            <router-link :to="{ path: '/patient/' + user.id + '/alertlog' }" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></router-link>
           </div>
         </div>
         <!-- ./col -->
@@ -367,10 +322,7 @@
                   <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
                       <i class="fa fa-bars"></i></button>
                   <ul class="dropdown-menu pull-right" role="menu">
-                    <li><a href="#">Add new event</a></li>
-                    <li><a href="#">Clear events</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">View calendar</a></li>
+                    <li><router-link :to="{ path: '/doctor/' + user.id + '/appointment' }">View list of events</router-link></li>
                   </ul>
                 </div>
                 <button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -386,48 +338,6 @@
               <div class="calendar-dashboard" style="width: 100%" v-datepicker></div>
             </div>
             <!-- /.box-body -->
-            <div class="box-footer text-black">
-              <div class="row">
-                <div class="col-sm-6">
-                  <!-- Progress bars -->
-                  <div class="clearfix">
-                    <span class="pull-left">Task #1</span>
-                    <small class="pull-right">90%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
-                  </div>
-
-                  <div class="clearfix">
-                    <span class="pull-left">Task #2</span>
-                    <small class="pull-right">70%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
-                  </div>
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-6">
-                  <div class="clearfix">
-                    <span class="pull-left">Task #3</span>
-                    <small class="pull-right">60%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
-                  </div>
-
-                  <div class="clearfix">
-                    <span class="pull-left">Task #4</span>
-                    <small class="pull-right">40%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
-                  </div>
-                </div>
-                <!-- /.col -->
-              </div>
-              <!-- /.row -->
-            </div>
           </div>
           <!-- /.box -->
 
@@ -445,7 +355,7 @@
           <!-- small box -->
           <div class="small-box bg-aqua">
             <div class="inner">
-              <h3>2</h3>
+              <h3>{{boxes.sheduledPatientAppointments}}</h3>
 
               <p>Sheduled Appointments</p>
             </div>
@@ -460,14 +370,14 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>90<sup style="font-size: 20px;">%</sup></h3>
+              <h3>{{boxes.measuredUptime}}<sup style="font-size: 20px;">%</sup></h3>
 
               <p>Measurement Uptime</p>
             </div>
             <div class="icon">
               <i class="ion ion-ios-speedometer"></i>
             </div>
-            <a href="#" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
+            <a class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -475,7 +385,7 @@
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>2</h3>
+              <h3>{{boxes.pendingPatientPrescriptions}}</h3>
 
               <p>Pending Prescriptions</p>
             </div>
@@ -490,14 +400,14 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>1</h3>
+              <h3>{{boxes.patientAlertsThisMonth}}</h3>
 
               <p>Alerts this Month</p>
             </div>
             <div class="icon">
               <i class="ion ion-ios-pulse-strong"></i>
             </div>
-            <a href="#" class="small-box-footer"> <i class="fa fa-arrow-circle-right"></i></a>
+            <router-link :to="{ path: '/patient/' + user.assignedPatient.id + '/alertlog' }" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></router-link>
           </div>
         </div>
         <!-- ./col -->
@@ -508,23 +418,48 @@
         <!-- Left col -->
         <section class="col-lg-7">
 
-          <!-- Custom tabs (Charts with tabs)-->
-          <div class="nav-tabs-custom">
-            <!-- Tabs within a box -->
-            <ul class="nav nav-tabs pull-right">
-              <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
-              <!-- <li><a href="#sales-chart" data-toggle="tab">Donut</a></li> -->
-              <li class="pull-left header"><i class="fa fa-area-chart"></i> Sensor Readings</li>
-            </ul>
-            <div class="tab-content no-padding">
-              <!-- Morris chart - Sales -->
-              <div class="chart tab-pane active" id="revenue-chart" style="position: relative;">
-                <line-chart :chart-data="datacollection" :height="200"></line-chart>
+          <!-- TABLE: LATEST ORDERS -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">Prescription Report</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
               </div>
-              <!-- <div class="chart tab-pane" id="sales-chart" style="position: relative;"></div> -->
             </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <div class="table-responsive">
+                <table class="table no-margin">
+                  <thead>
+                    <tr role="row">
+                      <th style="width: 1px;">#</th>
+                      <th>Doctor</th>
+                      <th>Date</th>
+                      <th>Options</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(row, index) in prescriptions">
+                      <td>{{ index + 1 }}</td>
+                      <td>{{ row.doctor.firstName + ' ' + row.doctor.lastName }}</td>
+                      <td>{{ formatDate(row.date) }}</td>
+                      <td style="width: 1%; white-space: nowrap !important; text-align: right;">
+                        <router-link :to="{ path: '/prescription/detail/' + row.id }" class='btn btn-default'>View</router-link>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.table-responsive -->
+              <!-- Loading (remove the following to stop the loading)-->
+              <div v-if="loadingPrescriptionsTable" class="overlay"><i class="fa fa-refresh fa-spin"></i></div>
+            </div>
+            <!-- /.box-body -->
           </div>
-          <!-- /.nav-tabs-custom -->
+          <!-- /.box -->
 
         </section>
         <!-- /.Left col -->
@@ -549,8 +484,22 @@
                   {{ user.assignedPatient.status }}</span></a>
                 </li>
                 <li><a>Insurance Company <span class="pull-right text-muted">{{ user.assignedPatient.insuranceCompany }}</span></a></li>
-                <li><a>Address(es) <span class="pull-right text-muted">{{ user.assignedPatient.addresses }}</span></a></li>
-                <li><a>Phone Number(s) <span class="pull-right text-muted">{{ user.assignedPatient.phoneNumbers }}</span></a></li>
+                <li>
+                  <a>Address(es)
+                    <span class="pull-right text-muted">
+                      <ul><li v-for="item in user.assignedPatient.addresses">{{item}}</li></ul>
+                    </span>
+                  </a>
+                  <br/>
+                </li>
+                <li>
+                  <a>Phone Number(s)
+                    <span class="pull-right text-muted">
+                      <ul><li v-for="item in user.assignedPatient.phoneNumbers">{{item}}</li></ul>
+                    </span>
+                  </a>
+                  <br/>
+                </li>
               </ul>
             </div>
           </div>
@@ -569,10 +518,7 @@
                   <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
                       <i class="fa fa-bars"></i></button>
                   <ul class="dropdown-menu pull-right" role="menu">
-                    <li><a href="#">Add new event</a></li>
-                    <li><a href="#">Clear events</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">View calendar</a></li>
+                    <li><router-link :to="{ path: '/doctor/' + user.id + '/appointment' }">View list of events</router-link></li>
                   </ul>
                 </div>
                 <button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -588,48 +534,6 @@
               <div class="calendar-dashboard" style="width: 100%" v-datepicker></div>
             </div>
             <!-- /.box-body -->
-            <div class="box-footer text-black">
-              <div class="row">
-                <div class="col-sm-6">
-                  <!-- Progress bars -->
-                  <div class="clearfix">
-                    <span class="pull-left">Task #1</span>
-                    <small class="pull-right">90%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
-                  </div>
-
-                  <div class="clearfix">
-                    <span class="pull-left">Task #2</span>
-                    <small class="pull-right">70%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
-                  </div>
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-6">
-                  <div class="clearfix">
-                    <span class="pull-left">Task #3</span>
-                    <small class="pull-right">60%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
-                  </div>
-
-                  <div class="clearfix">
-                    <span class="pull-left">Task #4</span>
-                    <small class="pull-right">40%</small>
-                  </div>
-                  <div class="progress xs">
-                    <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
-                  </div>
-                </div>
-                <!-- /.col -->
-              </div>
-              <!-- /.row -->
-            </div>
           </div>
           <!-- /.box -->
 
@@ -652,6 +556,7 @@ import LineChart from '@/components/LineChart';
 import Datepicker from '@/directives/Datepicker';
 import api from '@/services/api';
 import moment from 'moment';
+import {formatDate} from '@/services/filters';
 
 export default {
   name: 'Dashboard',
@@ -663,10 +568,20 @@ export default {
       updateInterval: 500,  // fetch data over x milliseconds
       boxes: {
         assignedPatients: 0,
-        pendingAppointments: 0
+        pendingAppointments: 0,
+        pendingPatientPrescriptions: 0,
+        patientAlertsThisMonth: 0,
+        sheduledPatientAppointments: 0,
+        assignedRelatives: 0,
+        measuredUptime: 0,
+        totalDoctors: 0,
+        totalPatients: 0,
+        totalRelatives: 0,
       },
       loadingStatusTable: true,
+      loadingPrescriptionsTable: true,
       patients: [],
+      prescriptions: [],
     };
   },
   components: {
@@ -676,6 +591,7 @@ export default {
     Datepicker,
   },
   methods: {
+    formatDate,
     moment() { return moment(); },
     isRole(role) {
       if (this.user.roles) {
@@ -713,10 +629,61 @@ export default {
           console.log(error);
         });
     },
+    getTotalDoctors() {
+      let self = this;
+      api.get('user?populate=[roles]').then(function(response) {
+          var results = response.data.filter(function (el) {
+            return el.roles.some(function (ele) {
+              return ele.name === 'doctor';
+            });
+          });
+          self.boxes.totalDoctors = results.length;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    getTotalPatients() {
+      let self = this;
+      api.get('user?populate=[roles]').then(function(response) {
+          var results = response.data.filter(function (el) {
+            return el.roles.some(function (ele) {
+              return ele.name === 'patient';
+            });
+          });
+          self.boxes.totalPatients = results.length;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    getTotalRelatives() {
+      let self = this;
+      api.get('user?populate=[roles]').then(function(response) {
+          var results = response.data.filter(function (el) {
+            return el.roles.some(function (ele) {
+              return ele.name === 'relative';
+            });
+          });
+          self.boxes.totalRelatives = results.length;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
     getPendingAppointments(userId) {
       let self = this;
       api.get('doctor/' + userId + '/appointment').then(function(response) {
           self.boxes.pendingAppointments = response.data.length;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    getSheduledPatientAppointments(userId) {
+      let self = this;
+      api.get('appointment?patient=' + userId + '&populate=[patient]').then(function(response) {
+          self.boxes.sheduledPatientAppointments = response.data.length;
         })
         .catch(function(error) {
           console.log(error);
@@ -733,14 +700,81 @@ export default {
           console.log(error);
         });
     },
+    getAssignedRelatives(userId) {
+      let self = this;
+      api.get('user?assignedPatient=' + userId).then(function(response) {
+          self.boxes.assignedRelatives = response.data.length;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    getPatientPrescriptions(userId) {
+      let self = this;
+      api.get('patient/' + userId + '/prescription').then(function(response) {
+          self.boxes.pendingPatientPrescriptions = response.data.length;
+          self.loadingPrescriptionsTable = false;
+          self.prescriptions = response.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    getPatientAlerts(userId) {
+      let self = this;
+      api.get('alertlog?patient=' + userId + '&populate=[patient]').then(function(response) {
+          self.boxes.patientAlertsThisMonth = response.data.length;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    getMeasuredUptime(userId) {
+      let self = this;
+      api.get('patient/' + userId + '/bucket/latest').then(function(response) {
+          var values = response.data.map(function(x) {
+            return (x.numSamples / 3600.00) * 100.00;
+          });
+          var total = 0;
+          for (var i = 0; i < values.length; i++) {
+            total = total + values[i];
+          }
+          total = total / (values.length * 1.0);
+          self.boxes.measuredUptime = +(total.toFixed(2));
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
   },
   created() {
     let self = this;
     auth.getUserInfo().then(function(data) {
         self.user = data;
+        if (self.isRole('admin')) {
+          self.getTotalDoctors();
+          self.getTotalPatients();
+          self.getTotalRelatives();
+        }
+
         if (self.isRole('doctor')) {
           self.getPendingAppointments(self.user.id);
           self.getAssignedPatients(self.user.id);
+        }
+
+        if (self.isRole('patient')) {
+          self.getPatientPrescriptions(self.user.id);
+          self.getPatientAlerts(self.user.id);
+          self.getSheduledPatientAppointments(self.user.id);
+          self.getAssignedRelatives(self.user.id);
+          self.getMeasuredUptime(self.user.id);
+        }
+
+        if (self.isRole('relative')) {
+          self.getPatientPrescriptions(self.user.assignedPatient.id);
+          self.getPatientAlerts(self.user.assignedPatient.id);
+          self.getSheduledPatientAppointments(self.user.assignedPatient.id);
+          self.getMeasuredUptime(self.user.assignedPatients.id);
         }
 
         setTimeout(function() {

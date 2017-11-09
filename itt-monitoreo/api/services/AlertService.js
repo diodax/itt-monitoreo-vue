@@ -76,7 +76,7 @@ module.exports = {
     done = typeof done !== 'undefined' ? done : function() {};
 
     // setting up some variables
-    var api_id = "wfjdbvkrm8";
+    var api_id = "5yshdz2sfg";
     var region_id = "us-east-1";
     var url = "https://" + api_id +  ".execute-api." + region_id + ".amazonaws.com/prod/sns-publish";
 

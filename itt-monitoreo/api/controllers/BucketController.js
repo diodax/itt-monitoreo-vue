@@ -84,8 +84,11 @@ function incrementTotalTics(id, user, bpm) {
       // 1-829-572-5431
       AlertService.sendSMS({
         message: 'El paciente se encuentra en estado de emergencia!',
-        phoneNumber: updated[0].phoneNumbers,
+        phoneNumbers: updated[0].phoneNumbers,
         subject: 'Alerta'
+      }, function smsSent(err, sms) {
+        if (err) { sails.log.error(err); }
+        else { sails.log.info('The SMS was succesfully sent!'); };
       });
       setTotalTics(updated[0].id, -30);
 

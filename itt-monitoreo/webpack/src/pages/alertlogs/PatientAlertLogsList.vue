@@ -71,6 +71,9 @@ export default {
     let self = this;
     api.get('/alertlog?patient=' + self.id + '&populate=[patient]').then(function(response) {
         self.list = response.data;
+        self.list.sort(function(a, b) {
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        });        
         self.loadingTable = false;
       })
       .catch(function(error) {

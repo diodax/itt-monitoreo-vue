@@ -85,12 +85,13 @@ module.exports = {
       if (_.isArray(options.phoneNumbers)) {
         // forEach request
         for (var i = 0; i < options.phoneNumbers.length; i++) {
-          request.post(
-              url,
-              { json: {
+          request.post({
+              url: url,
+              json: true,
+              body: {
+                subject: options.subject,
                 message: options.message,
-                phoneNumber: options.phoneNumbers[i],
-                subject: options.subject
+                phoneNumber: options.phoneNumbers[i]
               } },
               function (error, response, body) {
                   if (!error && response.statusCode == 200) {
@@ -98,6 +99,7 @@ module.exports = {
                       fulfill(body);
                       return done(null, body);
                   } else {
+                    sails.log.info(error);
                     reject(error);
                     return done(error);
                   }
@@ -106,12 +108,13 @@ module.exports = {
         }
       } else {
         // single request
-        request.post(
-            url,
-            { json: {
+        request.post({
+            url: url,
+            json: true,
+            body: {
+              subject: options.subject,
               message: options.message,
-              phoneNumber: options.phoneNumbers,
-              subject: options.subject
+              phoneNumber: options.phoneNumbers
             } },
             function (error, response, body) {
                 if (!error && response.statusCode == 200) {
@@ -119,6 +122,7 @@ module.exports = {
                     fulfill(body);
                     return done(null, body);
                 } else {
+                  sails.log.info(error);
                   reject(error);
                   return done(error);
                 }

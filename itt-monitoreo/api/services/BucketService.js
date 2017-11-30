@@ -20,6 +20,7 @@ module.exports = {
    * @param {string} data.username - The Bucket's username property
    * @param {string} data.timestamp - The Bucket's timestamp property
    * @param {?number} data.bpm - The Bucket's bpm property
+   * @param {boolean} [data.wearing] = The Bucket's wearing property
    * @param {requestCallback} done - The callback that handles the response. Returns an object as the data result. Compatible with Promises.
    */
   pushData: function(data, done) {
@@ -27,6 +28,35 @@ module.exports = {
       assert.equal(typeof(data.username), 'string', 'argument "data.username" must be a string');
       assert.ok(moment(data.timestamp, 'YYYY-MM-DDTHH:mm:ss').isValid(),'argument "data.timestamp" must be a valid YYYY-MM-DDTHH:mm:ss datetime string');
       //assert.ok(_.isFinite(data.bpm) || (data.bpm === null && typeof data.bpm === 'object'), 'argument "data.bpm" must be null or a finite number');
+      if (typeof data.wearing != "undefined") {
+        assert.ok(typeof(data.wearing) === typeof(true), 'argument "data.wearing" must be a boolean');
+        //If it's false, change the status of the patient to offline
+        if (data.wearing === false) {
+          // Find the patient and update its status
+          User.findOne({ username: data.username })
+            .then(function onSuccess(foundUser) {
+              if (!foundUser) {
+                var err = 'The user ' + data.username + ' does not exist!';
+                reject(err);
+                return done(err);
+              }
+              // Update the user
+              return User.update(foundUser.id, {status: 'offline'});
+            })
+            .then(function onSuccess(updatedUserList) {
+              if (updatedUserList[0]) {
+                sails.log.info("User " + updatedUserList[0].username + "'s status has been updated to 'offline'.");
+                //sails.log.info(updatedUserList[0]);
+              } else {
+                sails.log.info('No user records were updated with the offline status.');
+              }
+            })
+            .catch(function onFailure(err) {
+              reject(err);
+              return done(err);
+            });
+        }
+      }
 
       // default parameter for the callback function
       done = typeof done !== 'undefined' ? done : function() {};
@@ -93,20 +123,20 @@ module.exports = {
    *
    * @param {object} options - Dictionary with the helper's arguments
    * @param {string} options.username - The option's username search parameter
-   * @param {number} options.secs - The option's secs search parameter
+   * @param {number} options.mins - The option's mins search parameter
    * @param {requestCallback} done - The callback that handles the response. Returns an object as the data result. Compatible with Promises.
    */
   pullData: function(options, done) {
       assert.ok(typeof options !== 'undefined', 'argument "options" must be specified');
       assert.equal(typeof(options.username), 'string', 'argument "options.username" must be a string');
-      assert.ok(_.isFinite(options.secs), 'argument "options.secs" must be a finite number');
+      assert.ok(_.isFinite(options.mins), 'argument "options.mins" must be a finite number');
 
       // default parameter for the callback function
       done = typeof done !== 'undefined' ? done : function() {};
 
       // setting up some variables
       var currentDate = new Date();
-      var queriedSecsInHours = Math.ceil((options.secs / 60.0) / 60.0);
+      var queriedSecsInHours = Math.ceil(options.mins / 60.0);
       var currentDateNoMinutes = new Date();
       currentDateNoMinutes.setMinutes(0, 0, 0);
       var startDate = new Date();
@@ -142,7 +172,7 @@ module.exports = {
             reject(err);
             return done(err);
           }
-          var result = handleBucketValues(foundBuckets, options.secs);
+          var result = handleBucketValues(foundBuckets, options.mins);
           fulfill(result);
           return done(null, result);
         }).catch(function onFailure(err) {
@@ -175,7 +205,7 @@ function createReadingsObject(valMinute, valSecond, bpm) {
 }
 
 function handleBucketValues(buckets, totalPoints) {
-  // totalPoints = total amount of secs to push into the resulting array
+  // totalPoints = total amount of mins to push into the resulting array
   var data = [];
 
   // check if buckets is not an array, and make it so
@@ -202,14 +232,18 @@ function handleBucketValues(buckets, totalPoints) {
       if (min === currentMinute && firstIteration === true) {
         maxSecs = currentSecond; // only occurs on the first iteration
       }
-
+      // set a variable to calculate the average later
+      var totalValues = 0;
       for (var sec = maxSecs; sec >= 0; sec--) {
         // every sec, counting backwards
         if (data.length < totalPoints) {
           var value = _.get(bucket.values, min.toString() + '.' + sec.toString(), 0);
-          data.push(value);
+          totalValues += value;
+          //data.push(value);
         }
       }
+      // get the average of readings
+      data.push(totalValues / 60.0);
     }
   });
 
@@ -221,5 +255,6 @@ function handleBucketValues(buckets, totalPoints) {
       bpm: data[i]
     });
   }
-  return result;
+  // Flips the array so that the newest value appears on the right instead of the left
+  return result.reverse();
 }

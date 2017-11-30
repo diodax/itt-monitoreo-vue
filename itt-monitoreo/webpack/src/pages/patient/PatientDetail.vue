@@ -121,7 +121,7 @@ export default {
     moment() { return moment(); },
     fillData() {
       let self = this;
-      api.get('/bucket?username=' + this.user.username + '&secs=100').then(function(response) {
+      api.get('/bucket?username=' + this.user.username + '&mins=60').then(function(response) {
           let results = response.data;
           let dateresult = results.map(a => a.timestamp);
           let bpmresult = results.map(a => a.bpm);

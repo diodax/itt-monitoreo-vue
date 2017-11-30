@@ -29,6 +29,24 @@ module.exports = {
 			if (err) { return res.serverError(err); }
 			return res.json(sms);
 		});
-	}
+	},
+
+  testlog: function (req, res) {
+
+    // Updates log
+    AlertLog.create({
+      patient: '595b1daf5264b22a087d253c',
+      threshold: [60, 100],
+      bpm: '230',
+      timestamp: new Date()
+    }).exec(function alertLogged(err, alert) {
+      if (err) { return res.serverError(err); }
+      else { sails.log.info('An alert was succesfully logged!'); };
+      sails.log.info(alert);
+      return res.json(alert);
+    });
+    // Ends updating log
+
+  }
 
 };

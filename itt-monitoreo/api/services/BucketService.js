@@ -29,6 +29,9 @@ module.exports = {
       assert.ok(moment(data.timestamp, 'YYYY-MM-DDTHH:mm:ss').isValid(),'argument "data.timestamp" must be a valid YYYY-MM-DDTHH:mm:ss datetime string');
       //assert.ok(_.isFinite(data.bpm) || (data.bpm === null && typeof data.bpm === 'object'), 'argument "data.bpm" must be null or a finite number');
       if (typeof data.wearing != "undefined") {
+        sails.log.info("data.wearing:");
+        sails.log.info(data.wearing);
+        sails.log.info(typeof(data.wearing));
         assert.ok(typeof(data.wearing) === typeof(true), 'argument "data.wearing" must be a boolean');
         //If it's false, change the status of the patient to offline
         if (data.wearing === false) {

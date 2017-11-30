@@ -294,12 +294,18 @@
               <!-- <li><a href="#sales-chart" data-toggle="tab">Donut</a></li> -->
               <li class="pull-left header"><i class="fa fa-area-chart"></i> Sensor Readings</li>
             </ul>
-            <div class="tab-content no-padding">
+            <div class="tab-content no-padding" v-if="!disabledStatusTable">
               <!-- Morris chart - Sales -->
               <div class="chart tab-pane active" id="revenue-chart" style="position: relative;">
                 <line-chart :chart-data="datacollection" :height="200"></line-chart>
               </div>
               <!-- <div class="chart tab-pane" id="sales-chart" style="position: relative;"></div> -->
+            </div>
+            <!-- Message to show when the user state is offline-->
+            <div v-if="disabledStatusTable" class="tab-content no-padding" style="text-align: center;">
+              <br><br>
+              <i>No data available while the sensor is offline.</i>
+              <br><br><br>
             </div>
           </div>
           <!-- /.nav-tabs-custom -->
@@ -579,6 +585,7 @@ export default {
         totalRelatives: 0,
       },
       loadingStatusTable: true,
+      disabledStatusTable: false,
       loadingPrescriptionsTable: true,
       patients: [],
       prescriptions: [],
@@ -763,6 +770,13 @@ export default {
         }
 
         if (self.isRole('patient')) {
+          // Hide the graph if the wearable status is offline
+          if (self.user.status == 'offline') {
+            self.disabledStatusTable = true;
+          } else {
+            self.disabledStatusTable = false;
+          }
+
           self.getPatientPrescriptions(self.user.id);
           self.getPatientAlerts(self.user.id);
           self.getSheduledPatientAppointments(self.user.id);

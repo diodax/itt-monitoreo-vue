@@ -238,17 +238,25 @@ function handleBucketValues(buckets, totalPoints) {
         maxSecs = currentSecond; // only occurs on the first iteration
       }
       // set a variable to calculate the average later
-      var totalValues = 0;
+      var totalSumValues = 0;
+      var totalCountValues = 0;
+      var totalAverage = 0.0;
       for (var sec = maxSecs; sec >= 0; sec--) {
         // every sec, counting backwards
         if (data.length < totalPoints) {
           var value = _.get(bucket.values, min.toString() + '.' + sec.toString(), 0);
-          totalValues += parseFloat(value);
+          totalSumValues += parseFloat(value);
+          if (parseFloat(value) > 0) {
+            totalCountValues++;
+          }
           //data.push(value);
         }
       }
       // get the average of readings
-      data.push(totalValues / 60.0);
+      if (totalCountValues > 0) {
+        totalAverage = (totalSumValues * 1.0) / (totalCountValues * 1.0);
+      }
+      data.push(totalAverage);
     }
   });
 

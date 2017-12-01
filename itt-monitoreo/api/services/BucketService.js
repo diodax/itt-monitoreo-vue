@@ -29,9 +29,9 @@ module.exports = {
       assert.ok(moment(data.timestamp, 'YYYY-MM-DDTHH:mm:ss').isValid(),'argument "data.timestamp" must be a valid YYYY-MM-DDTHH:mm:ss datetime string');
       //assert.ok(_.isFinite(data.bpm) || (data.bpm === null && typeof data.bpm === 'object'), 'argument "data.bpm" must be null or a finite number');
       if (typeof data.wearing != "undefined") {
-        sails.log.info("data.wearing:");
-        sails.log.info(data.wearing);
-        sails.log.info(typeof(data.wearing));
+        sails.log.info("data");
+        sails.log.info(data);
+        //sails.log.info(typeof(data.wearing));
         //assert.ok(typeof(data.wearing) === typeof(true), 'argument "data.wearing" must be a boolean');
         //If it's false, change the status of the patient to offline
         if (data.wearing === 'false') {
@@ -108,8 +108,10 @@ module.exports = {
         }).then(function onSuccess(bucket) {
           if (_.isArray(bucket) === false) {
             sails.log.info('Bucket at ' + bucket.hourTimestamp + ' created! Number of samples is: ' + bucket.numSamples);
+            sails.log.info('The last registered value is: ' + data.bpm);
           } else if (bucket.length > 0) {
             sails.log.info('Bucket at ' + bucket[0].hourTimestamp + ' updated! Number of samples is: ' + bucket[0].numSamples);
+            sails.log.info('The last registered value is: ' + data.bpm);
           }
           fulfill(bucket);
           return done(null, bucket);

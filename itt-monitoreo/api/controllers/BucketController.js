@@ -52,7 +52,7 @@ module.exports = {
 			bpm: req.body.bpm || null,
       wearing: req.body.wearing
 		}
-    
+
     var step1 = BucketService.pushData(data);
     var step2 = step1.then(function(bucket) {
       return AlertService.isWithinThreshold({ username: req.body.username, bpm: req.body.bpm });
@@ -110,9 +110,9 @@ function incrementTotalTics(id, user, bpm, wearing) {
 
 function resetTotalTics(id, wearing) {
   var status;
-  if (wearing === true) {
+  if (wearing === 'true') {
     status = 'stable';
-  } else if (wearing === false) {
+  } else if (wearing === 'false') {
     status = 'offline';
   }
   //sails.log.info(id);

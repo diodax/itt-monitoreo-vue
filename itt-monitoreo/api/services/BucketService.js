@@ -20,7 +20,7 @@ module.exports = {
    * @param {string} data.username - The Bucket's username property
    * @param {string} data.timestamp - The Bucket's timestamp property
    * @param {?number} data.bpm - The Bucket's bpm property
-   * @param {boolean} [data.wearing] = The Bucket's wearing property
+   * @param {string} [data.wearing] = The Bucket's wearing property
    * @param {requestCallback} done - The callback that handles the response. Returns an object as the data result. Compatible with Promises.
    */
   pushData: function(data, done) {
@@ -32,9 +32,9 @@ module.exports = {
         sails.log.info("data.wearing:");
         sails.log.info(data.wearing);
         sails.log.info(typeof(data.wearing));
-        assert.ok(typeof(data.wearing) === typeof(true), 'argument "data.wearing" must be a boolean');
+        //assert.ok(typeof(data.wearing) === typeof(true), 'argument "data.wearing" must be a boolean');
         //If it's false, change the status of the patient to offline
-        if (data.wearing === false) {
+        if (data.wearing === 'false') {
           // Find the patient and update its status
           User.findOne({ username: data.username })
             .then(function onSuccess(foundUser) {

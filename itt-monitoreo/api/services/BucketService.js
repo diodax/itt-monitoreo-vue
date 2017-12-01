@@ -243,7 +243,7 @@ function handleBucketValues(buckets, totalPoints) {
         // every sec, counting backwards
         if (data.length < totalPoints) {
           var value = _.get(bucket.values, min.toString() + '.' + sec.toString(), 0);
-          totalValues += value;
+          totalValues += parseFloat(value);
           //data.push(value);
         }
       }

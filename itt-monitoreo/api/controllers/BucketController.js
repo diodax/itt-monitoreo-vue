@@ -49,7 +49,7 @@ module.exports = {
 		var data = {
 			username: req.body.username,
 			timestamp: moment(new Date(), 'YYYY-MM-DDTHH:mm:ss'),       //  req.body.timestamp,
-			bpm: req.body.bpm || null,
+			bpm: parseFloat(req.body.bpm),
       wearing: req.body.wearing
 		}
 

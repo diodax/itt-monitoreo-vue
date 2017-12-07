@@ -207,23 +207,7 @@ module.exports = {
 
     // setting up some variables
     var currentDate = new Date(options.endDate);
-    var queriedSecsInHours = moment.duration(options.endDate.diff(options.startDate)).asHours();
-    var currentDateNoMinutes = new Date(options.endDate);
-    currentDateNoMinutes.setMinutes(0, 0, 0);
     var startDate = new Date(options.startDate);
-    startDate.setHours(startDate.getHours() - queriedSecsInHours);
-    options.mins = queriedSecsInHours * 60;
-
-    // sails.log.info('currentDate:');
-    // sails.log.info(currentDate);
-    // sails.log.info('queriedSecsInHours:');
-    // sails.log.info(queriedSecsInHours);
-    // sails.log.info('currentDateNoMinutes:');
-    // sails.log.info(currentDateNoMinutes);
-    // sails.log.info('startDate:');
-    // sails.log.info(startDate);
-    // sails.log.info('options.mins:');
-    // sails.log.info(options.mins);
 
     return new Promise(function(fulfill, reject) {
       // Step 1: Checks if username is a valid user in the DB

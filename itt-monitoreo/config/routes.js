@@ -58,6 +58,7 @@ module.exports.routes = {
   },
 
   'GET /bucket': 'BucketController.find',
+  'GET /bucketrange': 'BucketController.findRange',
   'GET /patient/:id/bucket/latest': 'BucketController.findLatest',
   'POST /bucket': 'BucketController.create',
 

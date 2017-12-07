@@ -186,7 +186,81 @@ module.exports = {
         });
       });
   },
+
+  /**
+   * Returns a collection of buckets that match the filter's search parameters
+   *
+   * @param {object} options - Dictionary with the helper's arguments
+   * @param {string} options.username - The option's username search parameter
+   * @param {string} options.startDate - The option's startDate search parameter
+   * @param {string} options.endDate - The option's endDate search parameter
+   * @param {requestCallback} done - The callback that handles the response. Returns an object as the data result. Compatible with Promises.
+   */
+  pullDataRange: function(options, done) {
+    assert.ok(typeof options !== 'undefined', 'argument "options" must be specified');
+    assert.equal(typeof(options.username), 'string', 'argument "options.username" must be a string');
+    assert.ok(moment(options.startDate, 'YYYY-MM-DDTHH:mm:ss').isValid(),'argument "data.timestamp" must be a valid YYYY-MM-DDTHH:mm:ss datetime string');
+    assert.ok(moment(options.endDate, 'YYYY-MM-DDTHH:mm:ss').isValid(),'argument "data.timestamp" must be a valid YYYY-MM-DDTHH:mm:ss datetime string');
+
+    // default parameter for the callback function
+    done = typeof done !== 'undefined' ? done : function() {};
+
+    // setting up some variables
+    var currentDate = new Date(options.endDate);
+    var queriedSecsInHours = moment.duration(options.endDate.diff(options.startDate)).asHours();
+    var currentDateNoMinutes = new Date(options.endDate);
+    currentDateNoMinutes.setMinutes(0, 0, 0);
+    var startDate = new Date(options.startDate);
+    startDate.setHours(startDate.getHours() - queriedSecsInHours);
+    options.mins = queriedSecsInHours * 60;
+
+    // sails.log.info('currentDate:');
+    // sails.log.info(currentDate);
+    // sails.log.info('queriedSecsInHours:');
+    // sails.log.info(queriedSecsInHours);
+    // sails.log.info('currentDateNoMinutes:');
+    // sails.log.info(currentDateNoMinutes);
+    // sails.log.info('startDate:');
+    // sails.log.info(startDate);
+    // sails.log.info('options.mins:');
+    // sails.log.info(options.mins);
+
+    return new Promise(function(fulfill, reject) {
+      // Step 1: Checks if username is a valid user in the DB
+      var step1 = User.findOne({ username: options.username });
+      // Step 2: Finds the bucket or creates an empty one
+      var step2 = step1.then(function(user) {
+        if (!user) {
+          var err = 'The user ' + options.username + ' does not exist!';
+          reject(err);
+          return done(err);
+        }
+        return Bucket.find({
+          hourTimestamp: {
+            'greaterThanOrEqual': startDate,
+            'lessThanOrEqual': currentDate
+          }
+        }).populate('patient', { username: options.username }).sort('hourTimestamp ASC');
+      });
+
+      Promise.join(step1, step2, function onSuccess(foundUser, foundBuckets) {
+        if (!foundBuckets) {
+          var err = 'There are no records associated with the user ' + options.username;
+          reject(err);
+          return done(err);
+        }
+        var result = handleBucketsFromRange(foundBuckets, startDate, currentDate);
+        fulfill(result);
+        return done(null, result);
+      }).catch(function onFailure(err) {
+        reject(err);
+        return done(err);
+      });
+    });
+  }
 };
+
+
 
 /* Functions */
 
@@ -207,6 +281,62 @@ function createReadingsObject(valMinute, valSecond, bpm) {
     readings[valMinute] = tempMin;
   }
   return readings;
+}
+
+function handleBucketsFromRange(buckets, startDate, endDate) {
+  var data = [];
+  // check if buckets is not an array, and make it so
+  if (_.isArray(buckets) === false) {
+    buckets = [buckets];
+  }
+
+  //var timeStampsResult = buckets.map(a => a.hourTimestamp);
+
+  var timeCount = new Date(startDate.valueOf());
+  while (timeCount <= endDate) {
+    // Go from startDate to endDate, in 1-min intervals
+    // Get the corresponding bucket
+    var bucketFound = buckets.filter(function (obj) {
+      var hourfrombucket = new Date(obj.hourTimestamp);
+      hourfrombucket.setMinutes(0, 0, 0);
+      //sails.log.info("hourfrombucket:");
+      //sails.log.info(hourfrombucket);
+      var hourfromcounter = new Date(timeCount.valueOf());
+      hourfromcounter.setMinutes(0, 0, 0);
+      //sails.log.info("hourfromcounter:");
+      //sails.log.info(hourfromcounter);
+      return hourfrombucket.getTime() === hourfromcounter.getTime();
+    });
+    //sails.log.info("Before printing the timestamp:");
+    //sails.log.info(timeCount);
+
+    // Check if found
+    if (bucketFound.length > 0) {
+      // If found, get the data from the bucket
+      //sails.log.info("Bucket found!");
+      var tempTimestamp = new Date(timeCount.valueOf());
+      //sails.log.info("Value to be printed:");
+      //sails.log.info(tempTimestamp);
+      var min = timeCount.getMinutes();
+      var value = _.get(bucketFound[0].values, min.toString() + '.' + '0', 0);
+      var tempObj = { timestamp: tempTimestamp, bpm: value };
+      //sails.log.info(tempObj);
+      data.push(tempObj);
+    } else {
+      //sails.log.info("Bucket NOT found :(");
+      var tempTimestamp = new Date(timeCount.valueOf());
+      //sails.log.info("Value to be printed:");
+      //sails.log.info(tempTimestamp);
+      var tempObj = { timestamp: tempTimestamp, bpm: 0 };
+      //sails.log.info(tempObj);
+      data.push(tempObj);
+    }
+    // Add one minute to the timeCount value
+    timeCount.setMinutes(timeCount.getMinutes() + 1);
+    //sails.log.info("After adding one minute:");
+    //sails.log.info(timeCount);
+  }
+  return data;
 }
 
 function handleBucketValues(buckets, totalPoints) {

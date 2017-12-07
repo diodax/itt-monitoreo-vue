@@ -42,6 +42,22 @@ module.exports = {
     }
   },
 
+  findRange: function (req, res) {
+    var username = req.param('username');
+    var startDate = req.param('startDate');
+    var endDate = req.param('endDate');
+
+    if (typeof username === 'undefined' || typeof startDate === 'undefined' || typeof endDate === 'undefined') {
+			return res.badRequest();
+		} else {
+			BucketService.pullDataRange({ username: username, startDate: moment(startDate, 'YYYY-MM-DDTHH:mm:ss'), endDate: moment(endDate, 'YYYY-MM-DDTHH:mm:ss')}).then(function onSuccess(buckets){
+				return res.json(buckets);
+			}).catch(function onFailure(err) {
+				return res.serverError(err);
+			});
+		}
+  },
+
   /**
    * `BucketController.create()`
    */

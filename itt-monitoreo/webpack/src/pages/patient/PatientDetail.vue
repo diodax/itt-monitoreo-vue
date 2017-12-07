@@ -88,7 +88,40 @@
       </section>
       <!-- right col -->
     </div>
+    <!-- Second row -->
+    <div class="row">
+      <section class="col-lg-12">
+        <!-- Table Panel -->
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title"> <i class="fa fa-fw fa-file-text-o"></i> History Records</h3>
+          </div>
+          <div class="box-body form-horizontal">
 
+            <div class="form-group">
+              <label for="dateRange" class="col-lg-2 control-label">Date Range</label>
+              <div class="col-lg-6">
+                <date-range-picker id="dateRange" v-on:date-range-changed="onDateRangeChanged"></date-range-picker>
+              </div>
+              <div class="col-lg-4">
+                <button v-on:click="getSearchReport" class="btn btn-primary">
+                  Search &nbsp; <span class="fa fa-search" aria-hidden="true"></span>
+                </button>
+              </div>
+            </div>
+            <hr>
+            <div class="chart tab-pane" id="report-chart" style="position: relative;" v-if="showReportChart">
+              <line-chart-time :chart-data="reportcollection" :height="100"></line-chart-time>
+            </div>
+
+          </div>
+          <!-- Loading (remove the following to stop the loading)-->
+          <div v-if="loadingReportChart" class="overlay"><i class="fa fa-refresh fa-spin"></i></div>
+        </div>
+        <!-- End of Table Panel -->
+      </section>
+    </div>
+    <!-- /.Second row -->
   </section>
 
 </div>
@@ -99,9 +132,14 @@ import $ from 'jquery';
 import '../../../static/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js';
 import auth from '@/services/auth';
 import LineChart from '@/components/LineChart';
+import LineChartTime from '@/components/LineChartTime';
 import Datepicker from '@/directives/Datepicker';
-import api from '@/services/api';
 import moment from 'moment';
+//import '../../../static/plugins/bootstrap-daterangepicker/js/daterangepicker.js'
+import DateRangePicker from '@/components/DateRangePicker';
+import api from '@/services/api';
+
+
 import router from '@/router/index';
 
 export default {
@@ -112,17 +150,26 @@ export default {
       title: 'Patient Detail',
       user: {},
       datacollection: {},
+      reportcollection: {},
+      showReportChart: false,
       updateInterval: 500,  // fetch data over x milliseconds
       loadingStatusTable: true,
+      loadingReportChart: false,
       disabledStatusTable: false,
       patients: [],
+      username: null,
+      startDate: null,
+      endDate: null,
     };
   },
   components: {
-    LineChart
+    LineChart,
+    LineChartTime,
+    DateRangePicker
   },
   directives: {
     Datepicker,
+    //Daterangepicker
   },
   methods: {
     moment() { return moment(); },
@@ -152,6 +199,40 @@ export default {
           console.log(error);
         });
     },
+    getSearchReport: function() {
+      this.loadingReportChart = true;
+      let self = this;
+      api.get('/bucketrange?username=' + this.username + '&startDate=' + this.startDate + '&endDate=' + this.endDate).then(function(response) {
+        console.log(response.data);
+        let results = response.data;
+        let dateresult = results.map(a => a.timestamp);
+        let bpmresult = results.map(a => a.bpm);
+
+        self.reportcollection = {
+          labels: dateresult,
+          datasets: [
+            {
+              label: 'Beats Per Minute (BPM)',
+              backgroundColor: '#5bf8bf', //greenish     //'#f87979', //reddish
+              data: bpmresult
+            }
+          ]
+        };
+        self.showReportChart = true;
+        self.loadingReportChart = false;
+
+      }).catch(function(error) {
+        console.log(error);
+        self.loadingReportChart = false;
+        self.showReportChart = false;
+      });
+    },
+
+    onDateRangeChanged: function(picker) {
+      this.startDate = picker.startDate.format('YYYY-MM-DDTHH:mm:ss');
+      this.endDate = picker.endDate.format('YYYY-MM-DDTHH:mm:ss');
+      this.username = this.user.username;
+    },
   },
   created() {
     let self = this;
@@ -176,6 +257,7 @@ export default {
 };
 </script>
 <style src="../../../static/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css"></style>
+<style src="../../../static/plugins/bootstrap-daterangepicker/css/daterangepicker.css"></style>
 <!-- Theme style -->
 <style src="../../../static/adminLte/css/AdminLTE.min.css"></style>
 <style>

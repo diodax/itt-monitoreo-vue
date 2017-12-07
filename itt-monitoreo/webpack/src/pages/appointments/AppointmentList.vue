@@ -21,7 +21,7 @@
           </div>
           <div class="box-body table-responsive">
             <router-link :to="{ path: '/appointment/add' }" class="btn btn-primary">
-              New &nbsp; <span clsass="fa fa-plus" aria-hidden="true"></span>
+              New &nbsp; <span class="fa fa-plus" aria-hidden="true"></span>
             </router-link>
             <table class="table table-condensed table-bordered table-striped table-hover">
               <thead>
